@@ -33,7 +33,9 @@ def floor(id):
     form.number.data = floor.number
     if form.validate_on_submit():
         floor.number = form.number.data
-        floor.kegerators = form.kegerators.data
+        floor.kegerators = form.kegerators
+        print(form.number.data)
+        print(floor.number)
         db.session.commit()
     return render_template('floor.html',
             floor = floor,
@@ -51,7 +53,7 @@ def add_floor():
     new_floor = models.Floor()
     if form.validate_on_submit():
         new_floor.number = form.number.data
-        new_floor.kegerators = form.kegerators.data
+        new_floor.kegerators = form.kegerators
         db.session.add(new_floor)
         db.session.commit()
         return redirect("/floor/{0}".format(new_floor.id), 302)
@@ -90,6 +92,8 @@ def kegerator(id):
         kegerator.floor_id = form.floor_id.data
         kegerator.kegs = form.kegs.data
         kegerator.name = form.name.data
+        print(kegerator.floor_id)
+        print(form.floor_id.data)
         db.session.commit()
     return render_template('kegerator.html',
             kegerator = kegerator,

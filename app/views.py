@@ -15,9 +15,13 @@ def beers():
             beers=models.Beer.query.all())
 
 def update_beer(form, beer):
+    beer.abv=form.abv.data
+    beer.ba_score=form.ba_score.data
+    beer.brewer=form.brewer.data
+    beer.isi_score=form.isi_score.data
+    beer.link=form.link.data
     beer.name=form.name.data
     beer.style=form.style.data
-    beer.brewer=form.brewer.data
     return beer
 
 @app.route('/beer/<id>', methods=['GET', 'POST'])

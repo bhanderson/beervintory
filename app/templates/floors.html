@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+	{% if floors %}
+		{% for floor in floors %}
+		<ul>
+			<li><a href="{{url_for('floor', id=0)}}">{{floor}}</li>
+		</ul>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

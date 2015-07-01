@@ -1,0 +1,29 @@
+<html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<head>
+		<title>Beervintory</title>
+		<div class="header">Isilon Beervintory</div>
+	</head>
+	<body>
+		<ul class="nav">
+			<li class="nav"><a href="/index">Home</a></li>
+			<li class="nav"><a href="/floors">Floors</a></li>
+			<li class="nav"><a href="/kegerators">Kegerators</a></li>
+			<li class="nav"><a href="/kegs">Kegs</a></li>
+			<li class="nav"><a href="/beers">Beers</a></li>
+		</ul>
+		<hr>
+		<div class="flash">
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<ul>
+				{% for message in messages %}
+					<li>{{ message }} </li>
+				{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
+		</div>
+		{% block content %}{% endblock %}
+	</body>
+</html>

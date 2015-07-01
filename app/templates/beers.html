@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+	{% if beers %}
+		{% for beer in beers %}
+		<ul>
+			<li><a href="{{url_for('beer', id=beer.id)}}">{{beer}}</li>
+		</ul>
+		{% endfor %}
+	{% endif %}
+	<ul>
+		<li><a href="{{url_for('beer', id='add')}}">Add Beer</li>
+	</ul>
+{% endblock %}

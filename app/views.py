@@ -1,6 +1,6 @@
 from flask import render_template, flash
 from app import app, db, models
-from .forms import BeerForm
+from .forms import BeerForm, KegForm
 
 @app.route('/')
 @app.route('/index')
@@ -12,7 +12,7 @@ def index():
 @app.route('/beers')
 def beers():
     return render_template('beers.html',
-            beers=models.Beer.query.all())
+            beers=sorted(models.Beer.query.all()))
 
 def update_beer(form, beer):
     beer.abv=form.abv.data
@@ -61,15 +61,20 @@ def beer(id):
 
 @app.route('/kegs')
 def kegs():
-    kegs = ["kega", "kegb", "kegc"]
     return render_template('kegs.html',
-            kegs=kegs)
+            kegs=sorted(models.Keg.query.all()))
 
 @app.route('/keg/<id>')
 def keg(id):
-    keg = ["kega", "kegb", "kegc"]
+    if id == "add":
+        keg = models.Keg()
+    else:
+        keg = models.Keg.query.get(id)
+
+    form = KegForm()
+    form.populate_obj(keg)
     return render_template('keg.html',
-            keg=keg[int(id)])
+            form=form)
 
 @app.route('/kegerators')
 def kegerators():

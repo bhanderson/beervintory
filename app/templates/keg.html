@@ -1,4 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-	{{ keg }}
+	{% if keg %}
+		{{ keg }}
+	{% endif %}
+	<form action="" method="post" name="keg">
+		{{ form.hidden_tag() }}
+		<p>
+			Beer:<br>
+			{{ form.beer }}<br>
+			{% for error in form.beer.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+	</form>
 {% endblock %}

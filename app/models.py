@@ -2,11 +2,10 @@ from app import db
 
 class Floor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    kegerator_id = db.Column(db.Integer, db.ForeignKey('kegerator.id'))
+    kegerators = db.relationship("Kegerator", backref="floor")
     number = db.Column(db.Integer, index=True, unique=True)
 
     def __repr__(self):
-        return "<Floor {0}>".format(self.number)
         s = ['st','nd','rd','th']
         suffix = s[0]
         if self.number > 3:
@@ -19,8 +18,8 @@ class Kegerator(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     clean_date = db.Column(db.Date)
     co2 = db.Column(db.Boolean)
-    floor = db.relationship("Floor", backref="kegerator")
     keg_id = db.Column(db.Integer, db.ForeignKey('keg.id'))
+    floor_id = db.Column(db.Integer, db.ForeignKey('floor.id'))
     name = db.Column(db.String(32))
 
     def __repr__(self):

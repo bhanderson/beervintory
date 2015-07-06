@@ -1,4 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
-	{{ floor }}
+	{% if floor %}
+		{{ floor }}
+	{% endif %}
+	<form action="" method="post" name="floor">
+		{{ form.hidden_tag() }}
+		<p>
+			Number:<br>
+			{{ form.number }}<br>
+			{% for error in form.number.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Kegerators:<br>
+			{{ form.kegerators }}<br>
+			{% for error in form.kegerators.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.submit }}
+		</p>
+	</form>
+
 {% endblock %}

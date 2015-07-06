@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import (TextField, DecimalField, IntegerField, SelectField,
-SubmitField, DateField, BooleanField)
+SubmitField, DateField, BooleanField, SelectMultipleField)
 from wtforms.fields import FormField
 from wtforms.validators import DataRequired
 from . import models
@@ -21,9 +21,29 @@ class KegForm(Form):
     beers =models.Beer.query.all()
     l = []
     for beer in beers:
-        l.append((beer, beer.__repr__()))
-    beer = SelectField(coerce=models.Beer, choices = l)
+        l.append((beer.id, beer.__repr__()))
+    beer = SelectField(coerce=int, choices = l)
     chilled = BooleanField()
     filled = BooleanField()
     tapped = BooleanField()
     submit = SubmitField()
+
+class KegeratorForm(Form):
+    kegs = models.Keg.query.all()
+    l = []
+    for keg in kegs:
+        l.append((keg.id, keg.__repr__()))
+    co2 = BooleanField()
+    floor = SelectField(coerce=int, choices = l)
+    name = TextField('name')
+    submit = SubmitField()
+
+class FloorForm(Form):
+    number = IntegerField()
+    kegerators = models.Kegerator.query.all()
+    l = []
+    for kegerator in kegerators:
+        l.append((kegerator.id, kegerator.__repr__()))
+    kegerators = SelectMultipleField(choices=l, coerce=int)
+    submit = SubmitField()
+

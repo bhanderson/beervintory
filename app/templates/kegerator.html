@@ -1,4 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-	{{ kegerator }}
+	{% if kegerator %}
+		{{ kegerator }}
+	{% endif %}
+	<form action="" method="post" name="beer">
+		{{ form.hidden_tag() }}
+		<p>
+			Name:<br>
+			{{ form.name }}<br>
+			{% for error in form.name.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			CO2:<br>
+			{{ form.co2 }}<br>
+			{% for error in form.co2.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Keg:<br>
+			{{ form.floor }}<br>
+			{% for error in form.floor.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p><input type="Submit" value="Submit"></p>
+	</form>
 {% endblock %}

@@ -1,6 +1,6 @@
 from flask import render_template, flash, request
 from app import app, db, models
-from .forms import BeerForm, KegForm
+from .forms import BeerForm, KegForm, KegeratorForm, FloorForm
 
 @app.route('/')
 @app.route('/index')
@@ -63,11 +63,8 @@ def beer(id):
 @app.route('/kegs')
 def kegs():
     return render_template('kegs.html',
-            kegs=sorted(models.Keg.query.all()))
-
-def update_keg(keg):
-    print(keg)
-    return
+            kegs=sorted(models.Keg.query.all(), key=lambda x: x.beer.name,
+                reverse=False))
 
 @app.route('/keg/<id>', methods=['GET', 'POST'])
 def keg(id):
@@ -77,34 +74,63 @@ def keg(id):
         keg = models.Keg.query.get(id)
 
     form = KegForm(obj=keg)
-    print(form.validate_on_submit())
+    form.beer.beer=keg.beer_id
     if form.validate_on_submit():
-        print("HERE")
-        update_keg(keg)
+        keg.beer_id = form.beer.data
+        keg.chilled = form.chilled.data
+        keg.filled = form.filled.data
+        keg.tapped = form.tapped.data
+        db.session.add(keg)
+        db.session.commit()
 
     return render_template('keg.html',
-            form=form)
+            form=form,
+            keg=keg)
 
 @app.route('/kegerators')
 def kegerators():
-    kegerators = ["kegera", "kegerb", "kegerc"]
     return render_template('kegerators.html',
-            kegerators=kegerators)
+            kegerators=sorted(models.Kegerator.query.all(), key=lambda x:
+                x.name, reverse=False))
 
-@app.route('/kegerator/<id>')
+@app.route('/kegerator/<id>', methods=['GET', 'POST'])
 def kegerator(id):
-    kegerator = ["kegera", "kegerb", "kegerc"]
+    if id == "add":
+        kegerator = models.Kegerator()
+    else:
+        kegerator = models.Kegerator.query.get(id)
+
+    form = KegeratorForm(obj=kegerator)
+    if form.validate_on_submit():
+        kegerator.co2 = form.co2.data
+        kegerator.floor = form.floor.data
+        kegerator.name = form.name.data
+        db.session.add(kegerator)
+        db.session.commit()
+
     return render_template('kegerator.html',
-            kegerator=kegerator[int(id)])
+            form=form)
 
 @app.route('/floors')
 def floors():
-    floors = ["floora", "floorb", "floorc"]
     return render_template('floors.html',
-            floors=floors)
+            floors=sorted(models.Floor.query.all(), key=lambda x: x.number,
+                reverse=False))
 
-@app.route('/floor/<id>')
+@app.route('/floor/<id>', methods=['GET', 'POST'])
 def floor(id):
-    floors = ["floora", "floorb", "floorc"]
+    if id == "add":
+        floor = models.Floor()
+    else:
+        floor = models.Floor.query.get(id)
+
+    form = FloorForm(obj=floor)
+    if form.validate_on_submit():
+        floor.number = form.number.data
+        floor.kegerators = form.kegerators.data
+        db.session.add(floor)
+        db.session.commit()
+
     return render_template('floor.html',
-            floor=floors[int(id)])
+            floor=floor,
+            form=form)

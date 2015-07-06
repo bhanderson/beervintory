@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
+	<ul>
+		<li><a href="{{url_for('floor', id='add')}}">Add Floor</li>
+	</ul>
 	{% if floors %}
 		{% for floor in floors %}
 		<ul>
-			<li><a href="{{url_for('floor', id=0)}}">{{floor}}</li>
+			<li><a href="{{url_for('floor', id=floor.id)}}">{{floor}}</li>
 		</ul>
 		{% endfor %}
 	{% endif %}

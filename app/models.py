@@ -2,7 +2,7 @@ from app import db
 
 class Floor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    kegerators = db.relationship("Kegerator", backref="floor")
+    kegerator_id = db.Column(db.Integer, db.ForeignKey('kegerator.id'))
     number = db.Column(db.Integer, index=True, unique=True)
 
     def __repr__(self):
@@ -19,8 +19,8 @@ class Kegerator(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     clean_date = db.Column(db.Date)
     co2 = db.Column(db.Boolean)
-    floor_id = db.Column(db.Integer, db.ForeignKey('floor.id'))
-    keg = db.relationship('Keg', backref='kegerator')
+    floor = db.relationship("Floor", backref="kegerator")
+    keg_id = db.Column(db.Integer, db.ForeignKey('keg.id'))
     name = db.Column(db.String(32))
 
     def __repr__(self):
@@ -28,16 +28,23 @@ class Kegerator(db.Model):
 
 class Keg(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    beer = db.relationship('Beer', backref='kegs')
+    beer_id  = db.Column(db.Integer, db.ForeignKey('beer.id'))
     chilled = db.Column(db.Boolean)
     filled = db.Column(db.Boolean)
-    kegerator_id = db.Column(db.Integer, db.ForeignKey('kegerator.id'))
+    kegerator = db.relationship('Kegerator', backref='keg')
     tapped = db.Column(db.Boolean)
-    tapped_date = db.Column(db.Date)
-    empty_date = db.Column(db.Date)
 
     def __repr__(self):
-        return '<Keg {0}>'.format(self.id)
+        cold = "Warm"
+        full = "Empty"
+        if self.chilled:
+            cold = "Cold"
+        if self.filled:
+            full = "Full"
+        beer = Beer.query.get(self.beer_id)
+
+        return '{0} {1} | {2}, {3}'.format(beer.name, beer.style, full,
+                cold)
 
 class Beer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,7 +52,7 @@ class Beer(db.Model):
     ba_score = db.Column(db.Integer)
     brewer = db.Column(db.String(64), index=True)
     isi_score = db.Column(db.Integer)
-    keg_id  = db.Column(db.Integer, db.ForeignKey('keg.id'))
+    keg = db.relationship('Keg', backref='beer')
     link = db.Column(db.String(128))
     name = db.Column(db.String(64), index=True)
     style = db.Column(db.String(64), index=True)

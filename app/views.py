@@ -1,4 +1,4 @@
-from flask import render_template, flash
+from flask import render_template, flash, request
 from app import app, db, models
 from .forms import BeerForm, KegForm
 
@@ -12,7 +12,8 @@ def index():
 @app.route('/beers')
 def beers():
     return render_template('beers.html',
-            beers=sorted(models.Beer.query.all()))
+            beers=sorted(models.Beer.query.all(), key=lambda x: x.name,
+                reverse=False))
 
 def update_beer(form, beer):
     beer.abv=form.abv.data
@@ -64,15 +65,23 @@ def kegs():
     return render_template('kegs.html',
             kegs=sorted(models.Keg.query.all()))
 
-@app.route('/keg/<id>')
+def update_keg(keg):
+    print(keg)
+    return
+
+@app.route('/keg/<id>', methods=['GET', 'POST'])
 def keg(id):
     if id == "add":
         keg = models.Keg()
     else:
         keg = models.Keg.query.get(id)
 
-    form = KegForm()
-    form.populate_obj(keg)
+    form = KegForm(obj=keg)
+    print(form.validate_on_submit())
+    if form.validate_on_submit():
+        print("HERE")
+        update_keg(keg)
+
     return render_template('keg.html',
             form=form)
 

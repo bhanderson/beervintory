@@ -12,5 +12,26 @@
 				<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 		</p>
+		<p>
+			Chilled:<br>
+			{{ form.chilled }}<br>
+			{% for error in form.chilled.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+			Filled:<br>
+			{{ form.filled }}<br>
+			{% for error in form.filled.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		<p>
+			Tapped:<br>
+			{{ form.tapped }}<br>
+			{% for error in form.tapped.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+			{{ form.submit }}
+		</p>
 	</form>
 {% endblock %}

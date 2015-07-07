@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+	<div class="obj">
 	{% if floor %}
 		{{ floor }}
 	{% endif %}
-	<form action="" method="post" name="floor">
+	</div>
+	<form action="" method="post" name="floor" class="fields">
 		{{ form.hidden_tag() }}
 		<p>
 			Number:<br>
@@ -14,7 +16,11 @@
 		</p>
 		<p>
 			Kegerators:<br>
-			{{ form.kegerators }}<br>
+			<ul>
+			{% for kegerator in form.kegerators %}
+			<li>{{ kegerator }}<br>
+			{% endfor %}
+			</ul>
 			{% for error in form.kegerators.errors %}
 				<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
@@ -23,5 +29,6 @@
 			{{ form.submit }}
 		</p>
 	</form>
-
+	<div class="full">
+	</div>
 {% endblock %}

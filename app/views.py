@@ -78,12 +78,14 @@ def keg(id):
             form.chilled.data = keg.chilled
             form.filled.data = keg.filled
             form.tapped.data = keg.tapped
+            form.stocked.data = keg.stocked
 
     if form.validate_on_submit():
         keg.beer_id = int(form.beer.data)
         keg.chilled = form.chilled.data
         keg.filled = form.filled.data
         keg.tapped = form.tapped.data
+        keg.stocked = form.stocked.data
         if id == "add":
             db.session.add(keg)
         db.session.commit()
@@ -162,3 +164,9 @@ def floor(id):
     return render_template('floor.html',
             floor=floor,
             form=form)
+
+@app.route('/stock')
+def stock():
+    kegs = models.Keg.query.filter_by(stocked=True)
+    return render_template('stock.html',
+            kegs=kegs)

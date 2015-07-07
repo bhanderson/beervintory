@@ -37,4 +37,27 @@
 		</p>
 		<p><input type="Submit" value="Submit"></p>
 	</form>
+	<div class="full">
+		<table>
+			<colgroup>
+				<col span="1", style="background-color:yellow">
+			</colgroup>
+			<tr>
+				<th><strong>Name:</strong></th>
+				<th>{{ kegerator.name }}</th>
+			</tr>
+			<tr>
+				<th><strong>CO2:</strong></th>
+				<th>{{ kegerator.co2 }}</th>
+			</tr>
+			<tr>
+				<th><strong>Keg:</strong></th>
+				<th>{{ kegerator.keg }}</th>
+			</tr>
+			<tr>
+				<th><strong>Floor:</strong></th>
+				<th>{{ kegerator.floor }}</th>
+			</tr>
+		</table>
+	</div>
 {% endblock %}

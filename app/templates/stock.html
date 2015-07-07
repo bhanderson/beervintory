@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>What we have in stock!</h1>
+<ul>
+{% for keg in kegs %}
+<li>{{ keg }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -22,6 +22,7 @@ class KegForm(Form):
     chilled = BooleanField()
     filled = BooleanField()
     tapped = BooleanField()
+    stocked = BooleanField('stocked')
     submit = SubmitField()
 
 class KegeratorForm(Form):

@@ -32,6 +32,7 @@ class Keg(db.Model):
     beer_id  = db.Column(db.Integer, db.ForeignKey('beer.id'))
     chilled = db.Column(db.Boolean)
     filled = db.Column(db.Boolean)
+    stocked = db.Column(db.Boolean)
     kegerator = db.relationship('Kegerator', backref='keg')
     tapped = db.Column(db.Boolean)
 

@@ -21,16 +21,6 @@ def beers():
             beers=sorted(models.Beer.query.all(), key=lambda x: x.name,
                 reverse=False))
 
-def update_beer(form, beer):
-    beer.abv=form.abv.data
-    beer.ba_score=form.ba_score.data
-    beer.brewer=form.brewer.data
-    beer.isi_score=form.isi_score.data
-    beer.link=form.link.data
-    beer.name=form.name.data
-    beer.style=form.style.data
-    return beer
-
 @app.route('/beer/<id>', methods=['GET', 'POST'])
 def beer(id):
     form = BeerForm()
@@ -40,18 +30,24 @@ def beer(id):
         beer = models.Beer.query.get(id)
         if beer == None:
             return render_template('404.html'), 404
-        else:
-            form.obj = beer
+        elif request.method == "GET":
+            form.name.data = beer.name
+            form.style.data = beer.style
+            form.brewer.data = beer.brewer
+            form.abv.data = beer.abv
+            form.ba_score.data = beer.ba_score
+            form.isi_score.data = beer.isi_score
+            form.link.data = beer.link
+
 
     if form.validate_on_submit():
-        beer.abv=form.abv.data
-        beer.ba_score=form.ba_score.data
-        beer.brewer=form.brewer.data
-        beer.isi_score=form.isi_score.data
-        beer.link=form.link.data
         beer.name=form.name.data
         beer.style=form.style.data
-        form.populate_obj(beer)
+        beer.brewer=form.brewer.data
+        beer.abv=form.abv.data
+        beer.ba_score=form.ba_score.data
+        beer.isi_score=form.isi_score.data
+        beer.link=form.link.data
         if id == "add":
             db.session.add(beer)
         db.session.commit()
@@ -77,6 +73,11 @@ def keg(id):
         keg = models.Keg.query.get(id)
         if keg == None:
             return render_template('404.html'), 404
+        elif request.method == "GET":
+            form.beer.data = keg.beer_id
+            form.chilled.data = keg.chilled
+            form.filled.data = keg.filled
+            form.tapped.data = keg.tapped
 
     if form.validate_on_submit():
         keg.beer_id = int(form.beer.data)
@@ -111,8 +112,11 @@ def kegerator(id):
         kegerator = models.Kegerator.query.get(id)
         if kegerator == None:
             return render_template('404.html'), 404
-        else:
-            form.obj = kegerator
+        elif request.method == "GET":
+            form.co2.data = kegerator.co2
+            form.keg.data = kegerator.keg_id
+            form.floor.data = kegerator.floor_id
+            form.name.data = kegerator.name
 
     if form.validate_on_submit():
         kegerator.co2 = form.co2.data
@@ -144,6 +148,9 @@ def floor(id):
         floor = models.Floor.query.get(id)
         if floor == None:
             return render_template('404.html'), 404
+        elif request.method == "GET":
+            form.number.data = floor.number
+            form.kegerators = floor.kegerators
 
     if form.validate_on_submit():
         floor.number = form.number.data

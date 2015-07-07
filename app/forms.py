@@ -32,7 +32,7 @@ class KegeratorForm(Form):
     submit = SubmitField()
 
 class FloorForm(Form):
-    kegerators = SelectMultipleField(coerce = int)
+    kegerators = SelectMultipleField()
     number = IntegerField()
     submit = SubmitField()
 

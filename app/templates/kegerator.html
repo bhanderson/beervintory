@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-	{% if kegerator %}
-		{{ kegerator }}
-	{% endif %}
-	<form action="" method="post" name="beer">
+	<div class="obj">
+		{% if kegerator %}
+			{{ kegerator }}
+		{% endif %}
+	</div>
+	<form action="" method="post" name="beer" class="fields">
 		{{ form.hidden_tag() }}
 		<p>
 			Name:<br>

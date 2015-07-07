@@ -167,4 +167,4 @@ def floor(id):
 def stock():
     kegs = models.Keg.query.filter_by(stocked=True)
     return render_template('stock.html',
-            kegs=kegs)
+            kegs=sorted(kegs, key=lambda x: x.beer.name, reverse=False))

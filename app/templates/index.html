@@ -4,13 +4,13 @@
 	{% for floor in floors %}
 	<li>{{ floor }}</li>
 	<ul>
-		{% for kegerator in floor.kegerators %}
-		<li>{{ kegerator }}</li>
-		<ul>
-			<li>
-				<a href="{{ url_for('beer', id=kegerator.keg.beer.id)}}">{{ kegerator.keg.beer }}</a>
-			</li>
-		</ul>
+		{% for kegerator in kegerators %}
+			{% if kegerator.floor == floor %}
+				<li>{{ kegerator }}</li>
+				<ul>
+					<li> <a href="{{ url_for('beer', id=kegerator.keg.beer.id)}}">{{ kegerator.keg.beer }}</a> </li>
+				</ul>
+			{% endif %}
 		{% endfor %}
 	</ul>
 	{% endfor %}

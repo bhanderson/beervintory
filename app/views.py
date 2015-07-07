@@ -11,9 +11,7 @@ def index():
     beers = models.Beer.query.all()
     return render_template('index.html',
             floors=floors,
-            kegerators=kegerators,
-            kegs=kegs,
-            beers=beers)
+            kegerators=sorted(kegerators, key=lambda x: x.name, reverse=False))
 
 @app.route('/beers')
 def beers():

@@ -15,14 +15,12 @@ class BeerForm(Form):
     link = TextField('link')
     name = TextField('name')
     style = TextField('style')
+    submit = SubmitField()
 
 class KegForm(Form):
-    #beer = ModelFieldList(FormField(BeerForm))
-    beers =models.Beer.query.all()
-    l = []
-    for beer in beers:
-        l.append((beer.id, beer.__repr__()))
-    beer = SelectField(coerce=int, choices = l)
+    beers = models.Beer.query.all()
+    options = [(b.id, b.__repr__()) for b in beers]
+    beer = SelectField(coerce=int, choices=options)
     chilled = BooleanField()
     filled = BooleanField()
     tapped = BooleanField()
@@ -30,20 +28,19 @@ class KegForm(Form):
 
 class KegeratorForm(Form):
     kegs = models.Keg.query.all()
-    l = []
-    for keg in kegs:
-        l.append((keg.id, keg.__repr__()))
+    koptions = [(k.id, k.__repr__()) for k in kegs]
+    keg = SelectField(coerce=int, choices=koptions)
+    floors = models.Floor.query.all()
+    foptions = [(f.id, f.__repr__()) for f in floors]
+    floor = SelectField(coerce=int, choices=foptions)
     co2 = BooleanField()
-    floor = SelectField(coerce=int, choices = l)
-    name = TextField('name')
+    name = TextField('Name')
     submit = SubmitField()
 
 class FloorForm(Form):
-    number = IntegerField()
     kegerators = models.Kegerator.query.all()
-    l = []
-    for kegerator in kegerators:
-        l.append((kegerator.id, kegerator.__repr__()))
-    kegerators = SelectMultipleField(choices=l, coerce=int)
+    options = [(k.id, k.__repr__()) for k in kegerators]
+    kegerators = SelectMultipleField(coerce=int, choices=options)
+    number = IntegerField()
     submit = SubmitField()
 

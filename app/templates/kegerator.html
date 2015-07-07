@@ -21,6 +21,13 @@
 		</p>
 		<p>
 			Keg:<br>
+			{{ form.keg }}<br>
+			{% for error in form.keg.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Floor:<br>
 			{{ form.floor }}<br>
 			{% for error in form.floor.errors %}
 				<span style="color: red;">[{{ error }}]</span>

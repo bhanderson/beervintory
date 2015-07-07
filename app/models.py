@@ -3,7 +3,7 @@ from app import db
 class Floor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     kegerators = db.relationship("Kegerator", backref="floor")
-    number = db.Column(db.Integer, index=True, unique=True)
+    number = db.Column(db.Integer, index=True, unique=True, default=0)
 
     def __repr__(self):
         s = ['st','nd','rd','th']
@@ -40,10 +40,11 @@ class Keg(db.Model):
             cold = "Cold"
         if self.filled:
             full = "Full"
-        beer = Beer.query.get(self.beer_id)
-
-        return '{0} {1} | {2}, {3}'.format(beer.name, beer.style, full,
+        if self.beer_id:
+            beer = Beer.query.get(self.beer_id)
+            return '{0} {1} | {2}, {3}'.format(beer.name, beer.style, full,
                 cold)
+        return 'None | {0}, {1}'.format(full,cold)
 
 class Beer(db.Model):
     id = db.Column(db.Integer, primary_key=True)

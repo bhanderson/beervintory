@@ -51,6 +51,7 @@ def beer(id):
         beer.link=form.link.data
         beer.name=form.name.data
         beer.style=form.style.data
+        form.populate_obj(beer)
         if id == "add":
             db.session.add(beer)
         db.session.commit()

@@ -1,5 +1,6 @@
 .header {
 	font-size:80;
+	color:gray;
 }
 
 .flash {
@@ -14,4 +15,33 @@ ul.nav {
 
 li.nav {
 	display: inline;
+}
+
+.fields {
+	background: #eeeeee;
+	width:50%;
+	height:100%;
+	float:left;
+	padding:5px;
+}
+
+.obj {
+	background: lightblue;
+	width: 100%;
+	padding:5px;
+}
+
+.full {
+	background: LightSteelBlue;
+	padding:5px;
+	height:100%;
+}
+
+body {
+	background-color: LightCyan;
+}
+
+table, th, td{
+	border: 1px solid black;
+	padding:3px;
 }

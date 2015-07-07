@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-	{% if keg %}
-		{{ keg }}
-	{% endif %}
-	<form action="" method="post" name="keg">
+	<div class="obj">
+		{% if keg %}
+			{{ keg }}
+		{% endif %}
+	</div>
+	<form action="" method="post" name="keg" class="fields">
 		{{ form.hidden_tag() }}
 		<p>
 			Beer:<br>
@@ -35,4 +37,27 @@
 			{{ form.submit }}
 		</p>
 	</form>
+	<div class="full">
+		<table>
+			<colgroup>
+				<col span="1", style="background-color:yellow">
+			</colgroup>
+			<tr>
+				<th><strong>Kegerator:</strong></th>
+				<th>{{ keg.kegerator }}</th>
+			</tr>
+			<tr>
+				<th><strong>Chilled:</strong></th>
+				<th>{{ keg.chilled }}</th>
+			</tr>
+			<tr>
+				<th><strong>Filled:</strong></th>
+				<th>{{ keg.filled }}</th>
+			</tr>
+			<tr>
+				<th><strong>Tapped:</strong></th>
+				<th>{{ keg.tapped }}</th>
+			</tr>
+		</table>
+	</div>
 {% endblock %}

@@ -5,9 +5,15 @@ from .forms import BeerForm, KegForm, KegeratorForm, FloorForm
 @app.route('/')
 @app.route('/index')
 def index():
-    beer = "Bryce"
+    floors = models.Floor.query.all()
+    kegerators = models.Kegerator.query.all()
+    kegs = models.Keg.query.all()
+    beers = models.Beer.query.all()
     return render_template('index.html',
-            beer=beer)
+            floors=floors,
+            kegerators=kegerators,
+            kegs=kegs,
+            beers=beers)
 
 @app.route('/beers')
 def beers():
@@ -34,6 +40,8 @@ def beer(id):
         beer = models.Beer.query.get(id)
         if beer == None:
             return render_template('404.html'), 404
+        else:
+            form.obj = beer
 
     if form.validate_on_submit():
         beer.abv=form.abv.data
@@ -60,6 +68,8 @@ def kegs():
 @app.route('/keg/<id>', methods=['GET', 'POST'])
 def keg(id):
     form = KegForm()
+    beers = models.Beer.query.all()
+    form.beer.choices = [(b.id, b.__repr__()) for b in beers]
     if id == "add":
         keg = models.Keg()
     else:
@@ -68,7 +78,7 @@ def keg(id):
             return render_template('404.html'), 404
 
     if form.validate_on_submit():
-        keg.beer_id = form.beer.data
+        keg.beer_id = int(form.beer.data)
         keg.chilled = form.chilled.data
         keg.filled = form.filled.data
         keg.tapped = form.tapped.data
@@ -90,12 +100,18 @@ def kegerators():
 @app.route('/kegerator/<id>', methods=['GET', 'POST'])
 def kegerator(id):
     form = KegeratorForm()
+    floors = models.Floor.query.all()
+    form.floor.choices = [(f.id, f.__repr__()) for f in floors]
+    kegs = models.Keg.query.all()
+    form.keg.choices = [(k.id, k.__repr__()) for k in kegs]
     if id == "add":
         kegerator = models.Kegerator()
     else:
         kegerator = models.Kegerator.query.get(id)
         if kegerator == None:
             return render_template('404.html'), 404
+        else:
+            form.obj = kegerator
 
     if form.validate_on_submit():
         kegerator.co2 = form.co2.data
@@ -108,7 +124,7 @@ def kegerator(id):
 
     return render_template('kegerator.html',
             form=form,
-            keg=keg)
+            kegerator=kegerator)
 
 @app.route('/floors')
 def floors():
@@ -119,6 +135,8 @@ def floors():
 @app.route('/floor/<id>', methods=['GET', 'POST'])
 def floor(id):
     form = FloorForm()
+    kegerators = models.Kegerator.query.all()
+    form.kegerators.choices = [(k.id, k.__repr__()) for k in kegerators]
     if id == "add":
         floor = models.Floor()
     else:

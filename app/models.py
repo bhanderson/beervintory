@@ -6,13 +6,15 @@ class Floor(db.Model):
     number = db.Column(db.Integer, index=True, unique=True, default=0)
 
     def __repr__(self):
-        s = ['st','nd','rd','th']
-        suffix = s[0]
-        if self.number > 3:
-            suffix = s[3]
-        else:
-            suffix = s[self.number-1]
-        return "{0}{1}".format(self.number, suffix)
+        if self.number:
+            s = ['st','nd','rd','th']
+            suffix = s[0]
+            if self.number > 3:
+                suffix = s[3]
+            else:
+                suffix = s[self.number-1]
+            return "{0}{1}".format(self.number, suffix)
+        return "None"
 
 class Kegerator(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,7 +25,7 @@ class Kegerator(db.Model):
     name = db.Column(db.String(32))
 
     def __repr__(self):
-        return 'Kegerator {0}>'.format(self.name)
+        return '{0}'.format(self.name)
 
 class Keg(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,4 +60,4 @@ class Beer(db.Model):
     style = db.Column(db.String(64), index=True)
 
     def __repr__(self):
-        return "<{0} {1} | {2}>".format(self.name, self.style, self.brewer)
+        return "{0} {1} | {2}".format(self.name, self.style, self.brewer)

@@ -18,29 +18,21 @@ class BeerForm(Form):
     submit = SubmitField()
 
 class KegForm(Form):
-    beers = models.Beer.query.all()
-    options = [(b.id, b.__repr__()) for b in beers]
-    beer = SelectField(coerce=int, choices=options)
+    beer = SelectField(coerce = int)
     chilled = BooleanField()
     filled = BooleanField()
     tapped = BooleanField()
     submit = SubmitField()
 
 class KegeratorForm(Form):
-    kegs = models.Keg.query.all()
-    koptions = [(k.id, k.__repr__()) for k in kegs]
-    keg = SelectField(coerce=int, choices=koptions)
-    floors = models.Floor.query.all()
-    foptions = [(f.id, f.__repr__()) for f in floors]
-    floor = SelectField(coerce=int, choices=foptions)
+    floor = SelectField(coerce = int)
+    keg = SelectField(coerce = int)
     co2 = BooleanField()
     name = TextField('Name')
     submit = SubmitField()
 
 class FloorForm(Form):
-    kegerators = models.Kegerator.query.all()
-    options = [(k.id, k.__repr__()) for k in kegerators]
-    kegerators = SelectMultipleField(coerce=int, choices=options)
+    kegerators = SelectMultipleField(coerce = int)
     number = IntegerField()
     submit = SubmitField()
 

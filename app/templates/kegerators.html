@@ -4,7 +4,7 @@
 	<li><a href="{{ url_for('kegerator', id='add') }}">Add Kegerator</li>
 	{% if kegerators %}
 		{% for kegerator in kegerators %}
-			<li><a href="{{url_for('kegerator', id=0)}}">{{kegerator}}</li>
+			<li><a href="{{url_for('kegerator', id=kegerator.id)}}">{{kegerator}}</li>
 		{% endfor %}
 	{% endif %}
 	</ul>

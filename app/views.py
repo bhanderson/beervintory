@@ -1,6 +1,7 @@
 from flask import render_template, flash, request
 from app import app, db, models
 from .forms import BeerForm, KegForm, KegeratorForm, FloorForm
+from . import auth
 
 @app.route('/')
 @app.route('/index')
@@ -20,6 +21,7 @@ def beers():
                 reverse=False))
 
 @app.route('/beer/<id>', methods=['GET', 'POST'])
+@auth.requires_auth
 def beer(id):
     form = BeerForm()
     if id == "add":
@@ -61,6 +63,7 @@ def kegs():
                 reverse=False))
 
 @app.route('/keg/<id>', methods=['GET', 'POST'])
+@auth.requires_auth
 def keg(id):
     form = KegForm()
     beers = models.Beer.query.all()
@@ -100,6 +103,7 @@ def kegerators():
                 x.name, reverse=False))
 
 @app.route('/kegerator/<id>', methods=['GET', 'POST'])
+@auth.requires_auth
 def kegerator(id):
     form = KegeratorForm()
     floors = models.Floor.query.all()
@@ -138,6 +142,7 @@ def floors():
                 reverse=False))
 
 @app.route('/floor/<id>', methods=['GET', 'POST'])
+@auth.requires_auth
 def floor(id):
     form = FloorForm()
     kegerators = models.Kegerator.query.all()

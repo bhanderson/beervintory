@@ -1,6 +1,7 @@
 from app import db
 
 class Floor(db.Model):
+    '''Top level model contains a relationship to a kegerator and its number'''
     id = db.Column(db.Integer, primary_key=True)
     kegerators = db.relationship("Kegerator", backref="floor")
     number = db.Column(db.Integer, index=True, unique=True, default=0)
@@ -17,6 +18,8 @@ class Floor(db.Model):
         return "None"
 
 class Kegerator(db.Model):
+    '''Has a relationship to the keg it contains and the floor it is on, there
+    are columns that are not used yet'''
     id = db.Column(db.Integer, primary_key=True)
     clean_date = db.Column(db.Date)
     co2 = db.Column(db.Boolean)
@@ -28,6 +31,8 @@ class Kegerator(db.Model):
         return '{0}'.format(self.name)
 
 class Keg(db.Model):
+    '''Keg has a foreign_key relationship to a beer and general information
+    about the keg'''
     id = db.Column(db.Integer, primary_key=True)
     beer_id  = db.Column(db.Integer, db.ForeignKey('beer.id'))
     chilled = db.Column(db.Boolean)
@@ -50,6 +55,7 @@ class Keg(db.Model):
         return 'None | {0}, {1}'.format(full,cold)
 
 class Beer(db.Model):
+    '''Most basic model. Has a backwards relationship to the keg it is in'''
     id = db.Column(db.Integer, primary_key=True)
     abv = db.Column(db.Float(precision=4))
     ba_score = db.Column(db.Integer)

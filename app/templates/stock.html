@@ -3,7 +3,7 @@
 <h1>What we have in stock!</h1>
 <ul>
 {% for keg in kegs %}
-<li>{{ keg }}</li>
+<li><a href="{{url_for('keg', id=keg.id)}}">{{keg}}</li>
 {% endfor %}
 </ul>
 {% endblock %}

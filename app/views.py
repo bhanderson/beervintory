@@ -6,6 +6,8 @@ from . import auth
 @app.route('/')
 @app.route('/index')
 def index():
+    '''Home page for the main program, displays each floor with its kegerator and
+    beer'''
     floors = models.Floor.query.all()
     kegerators = models.Kegerator.query.all()
     kegs = models.Keg.query.all()
@@ -16,6 +18,7 @@ def index():
 
 @app.route('/beers')
 def beers():
+    '''Displays all beers'''
     return render_template('beers.html',
             beers=sorted(models.Beer.query.all(), key=lambda x: x.name,
                 reverse=False))
@@ -23,6 +26,7 @@ def beers():
 @app.route('/beer/<id>', methods=['GET', 'POST'])
 @auth.requires_auth
 def beer(id):
+    '''Displays a certain beer or the pace to create a beer'''
     form = BeerForm()
     if id == "add":
         beer = models.Beer()
@@ -58,6 +62,7 @@ def beer(id):
 
 @app.route('/kegs')
 def kegs():
+    '''Displays all kegs'''
     return render_template('kegs.html',
             kegs=sorted(models.Keg.query.all(), key=lambda x: x.beer.name,
                 reverse=False))
@@ -65,6 +70,7 @@ def kegs():
 @app.route('/keg/<id>', methods=['GET', 'POST'])
 @auth.requires_auth
 def keg(id):
+    '''Displays certain keg or the page to create a keg'''
     form = KegForm()
     beers = models.Beer.query.all()
     form.beer.choices = [(b.id, b.__repr__()) for b in beers]
@@ -98,6 +104,7 @@ def keg(id):
 
 @app.route('/kegerators')
 def kegerators():
+    '''Displays all kegerators'''
     return render_template('kegerators.html',
             kegerators=sorted(models.Kegerator.query.all(), key=lambda x:
                 x.name, reverse=False))
@@ -105,6 +112,7 @@ def kegerators():
 @app.route('/kegerator/<id>', methods=['GET', 'POST'])
 @auth.requires_auth
 def kegerator(id):
+    '''Displays a certain kegerator or the page to create a kegerator'''
     form = KegeratorForm()
     floors = models.Floor.query.all()
     form.floor.choices = [(f.id, f.__repr__()) for f in floors]
@@ -137,6 +145,7 @@ def kegerator(id):
 
 @app.route('/floors')
 def floors():
+    '''Views all floors'''
     return render_template('floors.html',
             floors=sorted(models.Floor.query.all(), key=lambda x: x.number,
                 reverse=False))
@@ -144,6 +153,7 @@ def floors():
 @app.route('/floor/<id>', methods=['GET', 'POST'])
 @auth.requires_auth
 def floor(id):
+    '''Views or creates a particular floor'''
     form = FloorForm()
     kegerators = models.Kegerator.query.all()
     form.kegerators.choices = [(k.id, k.__repr__()) for k in kegerators]
@@ -170,6 +180,7 @@ def floor(id):
 
 @app.route('/stock')
 def stock():
+    '''Lists all the beers we have on hand'''
     kegs = models.Keg.query.filter_by(stocked=True)
     return render_template('stock.html',
             kegs=sorted(kegs, key=lambda x: x.beer.name, reverse=False))

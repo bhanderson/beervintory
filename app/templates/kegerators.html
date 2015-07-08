@@ -2,10 +2,12 @@
 {% block content %}
 	<ul>
 	<li><a href="{{ url_for('kegerator', id='add') }}">Add Kegerator</li>
+	</ul>
 	{% if kegerators %}
 		{% for kegerator in kegerators %}
+		<ul>
 			<li><a href="{{url_for('kegerator', id=kegerator.id)}}">{{kegerator}}</li>
+		</ul>
 		{% endfor %}
 	{% endif %}
-	</ul>
 {% endblock %}

@@ -73,9 +73,9 @@ def kegerator(id):
     kegerator = models.Kegerator.query.get_or_404(id)
     form = KegeratorForm()
     floors = models.Floor.query.all()
-    form.floor.choices = [(f.id, f.__repr__()) for f in floors]
+    form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
     kegs = models.Keg.query.all()
-    form.keg.choices = [(k.id, k.__repr__()) for k in kegs]
+    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
     form.clean_date.data = kegerator.clean_date
     form.co2.data = kegerator.co2
     form.co2_date.data = kegerator.co2_date
@@ -93,15 +93,15 @@ def kegerator(id):
             kegerator = kegerator,
             form = form)
 
-@app.route('/kegerator/add', methods=['POST'])
+@app.route('/kegerator/add', methods=['GET','POST'])
 @auth.requires_auth
 def add_kegerator():
     # Create the form
     form = KegeratorForm()
     floors = models.Floor.query.all()
-    form.floor.choices = [(f.id, f.__repr__()) for f in floors]
+    form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
     kegs = models.Keg.query.all()
-    form.keg.choices = [(k.id, k.__repr__()) for k in kegs]
+    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
     # Create the kegerator
     new_kegerator = models.Kegerator()
     if form.validate_on_submit():
@@ -111,7 +111,8 @@ def add_kegerator():
         new_kegerator.floor_id = form.floor_id.data
         new_kegerator.kegs = form.kegs.data
         new_kegerator.name = form.name.data
-        return redirect("/kegerator/{0}".format(new_kegerator.id), 302)
+        return new_kegerator.id
+        # return redirect("/kegerator/{0}".format(new_kegerator.id), 302)
     return render_template('kegerator_add.html',
             form=form)
 

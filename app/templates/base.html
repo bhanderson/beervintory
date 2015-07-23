@@ -1,18 +1,25 @@
 <html>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
 	<head>
-		<title>Beervintory</title>
-		<div class="header">Beervintory</div>
+		<script src="{{ url_for('static', filename='jquery-min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+		<title>🍺Beervintory</title>
+		<!-- <div class="header">Beervintory</div> -->
 	</head>
 	<body>
-		<ul class="nav">
-			<li class="nav"><a href="/index">Home</a></li>
-			<li class="nav"><a href="/floors">Floors</a></li>
-			<li class="nav"><a href="/kegerators">Kegerators</a></li>
-			<li class="nav"><a href="/kegs">Kegs</a></li>
-			<li class="nav"><a href="/beers">Beers</a></li>
-			<li class="nav"><a href="/stock">Stock</a></li>
-		</ul>
+		<header>
+			Beervintory🍻
+		</header>
+		<nav class="navbar navbar-default">
+			<a href="/index" class="btn btn-default navbar-btn">Home</a>
+			<a href="/floors" class="btn btn-default navbar-btn">Floors</a>
+			<a href="/kegerators" class="btn btn-default navbar-btn">Kegerators</a>
+			<a href="/kegs" class="btn btn-default navbar-btn">Kegs</a>
+			<a href="/beers" class="btn btn-default navbar-btn">Beers</a>
+			<a href="/stock" class="btn btn-default navbar-btn">Stock</a>
+		</nav>
 		<hr>
 		<div class="flash">
 		{% with messages = get_flashed_messages() %}

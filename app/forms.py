@@ -24,7 +24,7 @@ class KegForm(Form):
     Each keg has a beer and information about the keg.'''
     beer = SelectField(coerce = int)
     chilled = BooleanField()
-    filled = BooleanField()
+    filled = IntegerField('filled')
     tapped = BooleanField()
     stocked = BooleanField('stocked')
     submit = SubmitField()
@@ -45,3 +45,8 @@ class FloorForm(Form):
     number = IntegerField()
     submit = SubmitField()
 
+class VoteForm(Form):
+    """Form for making a new vote."""
+    beer = SelectMultipleField()
+    rating = IntegerField()
+    submit = SubmitField()

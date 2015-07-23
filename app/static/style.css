@@ -1,4 +1,4 @@
-.header {
+header {
 	font-size:80;
 	color:gray;
 }
@@ -25,23 +25,49 @@ li.nav {
 	padding:5px;
 }
 
-.obj {
-	background: lightblue;
-	width: 100%;
-	padding:5px;
-}
-
-.full {
-	background: LightSteelBlue;
-	padding:5px;
-	height:100%;
-}
-
-body {
-	background-color: LightCyan;
-}
-
 table, th, td{
 	border: 1px solid black;
 	padding:3px;
+}
+
+.keg-visual{
+	text-align: center;
+	height: 100px;
+	width: 75px;
+	margin-left: 50px;
+}
+
+.keg-top {
+	margin-left: 28px;
+	background-color: #cbc8c8;
+	height: 15px;
+	width: 17px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-top: black 5px solid;
+	border-left: black 5px solid;
+	border-right: black 5px solid;
+}
+
+.keg-body {
+	background-color: #cbc8c8;
+	border: black 5px solid;
+	width: 100%;
+	height: 85px;
+	border-radius: 10px;
+}
+
+.keg-content {
+	height: 95%;
+	margin-top: 2.5%;
+	width: 95%;
+	margin-left: 2.5%;
+}
+
+.air {
+	background-color: #ffffff;
+}
+
+#beer-info {
+	display: none;
 }

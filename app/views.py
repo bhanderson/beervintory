@@ -75,7 +75,7 @@ def kegerator(id):
     floors = models.Floor.query.all()
     form.floor.choices = [(f.id, f.__repr__()) for f in floors]
     kegs = models.Keg.query.all()
-    form.keg.choices = [(k.id, k.__repr__()) for k in kegs]
+    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
     form.clean_date.data = kegerator.clean_date
     form.co2.data = kegerator.co2
     form.co2_date.data = kegerator.co2_date
@@ -93,7 +93,7 @@ def kegerator(id):
             kegerator = kegerator,
             form = form)
 
-@app.route('/kegerator/add', methods=['POST'])
+@app.route('/kegerator/add', methods=['GET', 'POST'])
 @auth.requires_auth
 def add_kegerator():
     # Create the form
@@ -111,6 +111,8 @@ def add_kegerator():
         new_kegerator.floor_id = form.floor_id.data
         new_kegerator.kegs = form.kegs.data
         new_kegerator.name = form.name.data
+        db.session.add(new_kegerator)
+        db.session.commit()
         return redirect("/kegerator/{0}".format(new_kegerator.id), 302)
     return render_template('kegerator_add.html',
             form=form)
@@ -126,13 +128,27 @@ def kegs():
 @auth.requires_auth
 def keg(id):
     '''Displays certain keg or the page to create a keg'''
+    keg = models.Keg.query.get_or_404(id)
     form = KegForm()
     beers = models.Beer.query.all()
-    form.beer.choices = [(b.id, b.__repr__()) for b in beers]
+    form.beer_id.choices = [(b.id, b.__repr__()) for b in beers]
+    form.beer_id.data = keg.beer_id
+    kegerators = models.Kegerator.query.all()
+    form.kegerator_id.choices = [(k.id, k.__repr__()) for k in kegerators]
+    form.chilled.data = keg.chilled
+    form.chilled_date.data = keg.chilled_date
+    form.empty_date.data = keg.empty_date
+    form.filled.data = keg.filled
+    form.stocked.data = keg.stocked
+    form.stocked_date.data = keg.stocked_date
+    form.tapped.data = keg.tapped
+    form.tapped_date.data = keg.tapped_date
+
+
+
     if id == "add":
         keg = models.Keg()
     else:
-        keg = models.Keg.query.get(id)
         if keg == None:
             return render_template('404.html'), 404
         elif request.method == "GET":

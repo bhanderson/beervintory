@@ -3,7 +3,7 @@ from app import db
 class Floor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     kegerators = db.relationship("Kegerator", backref="floor")
-    number = db.Column(db.Integer,unique=True)
+    number = db.Column(db.Integer, unique=True)
 
     def __repr__(self):
         if self.number:

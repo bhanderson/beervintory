@@ -22,12 +22,16 @@ class BeerForm(Form):
 class KegForm(Form):
     '''Form for a keg containing beer.
     Each keg has a beer and information about the keg.'''
-    beer = SelectField(coerce = int)
+    beer = SelectField(coerce = int, validators=[DataRequired()])
     chilled = BooleanField()
+    chilled_date = DateField()
+    empty_date = DateField()
     filled = IntegerField('filled')
-    tapped = BooleanField()
     stocked = BooleanField('stocked')
+    stocked_date = DateField()
     submit = SubmitField()
+    tapped = BooleanField()
+    tapped_date = DateField()
 
 class KegeratorForm(Form):
     '''Form for each Kegerator containing a keg.

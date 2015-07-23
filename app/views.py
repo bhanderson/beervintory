@@ -40,7 +40,7 @@ def floor(id):
             floor = floor,
             form = form)
 
-@app.route('/floor/add', methods=['POST'])
+@app.route('/floor/add', methods=['GET', 'POST'])
 @auth.requires_auth
 def add_floor():
     '''Adds a floor'''

@@ -5,30 +5,44 @@
 		{{ floor }}
 	{% endif %}
 	</div>
-	<form action="" method="post" name="floor" class="fields">
-		{{ form.hidden_tag() }}
-		<p>
-			Number:<br>
-			{{ form.number }}<br>
-			{% for error in form.number.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Kegerators:<br>
-			<ul>
-			{% for kegerator in form.kegerators %}
-			<li>{{ kegerator }}<br>
-			{% endfor %}
-			</ul>
-			{% for error in form.kegerators.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.submit }}
-		</p>
-	</form>
+
 	<div class="full">
 	</div>
+	<button class='btn btn-default' data-toggle="modal" data-target="#myModal">
+		Edit this floor
+	</button>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop = "false">
+  		<div class="modal-dialog">
+    		<div class="modal-content">
+        		<div class="modal-body">
+        			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<form action="" method="post" name="floor">
+						{{ form.hidden_tag() }}
+						<p>
+							Number:<br>
+							{{ form.number }}<br>
+							{% for error in form.number.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+						</p>
+						<p>
+							Kegerators:<br>
+							<ul>
+								{% for kegerator in form.kegerators %}
+								<li>{{ kegerator }}</li><br>
+									{% endfor %}
+							</ul>
+							{% for error in form.kegerators.errors %}
+								<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+						</p>
+						<p>
+							{{ form.submit }}
+						</p>
+					</form>
+	        	</div> <!-- closing modal body -->
+	      	</div> <!-- closing modal content -->
+	    </div> <!-- closing modal dialog -->
+	</div> <!-- closing modal -->
 {% endblock %}

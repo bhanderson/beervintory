@@ -1,42 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-	<div class="obj">
-		{% if kegerator %}
-			{{ kegerator }}
-		{% endif %}
-	</div>
-	<form action="" method="post" name="beer" class="fields">
-		{{ form.hidden_tag() }}
-		<p>
-			Name:<br>
-			{{ form.name }}<br>
-			{% for error in form.name.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			CO2:<br>
-			{{ form.co2 }}<br>
-			{% for error in form.co2.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Keg:<br>
-			{{ form.keg }}<br>
-			{% for error in form.keg.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Floor:<br>
-			{{ form.floor }}<br>
-			{% for error in form.floor.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p><input type="Submit" value="Submit"></p>
-	</form>
 	<div class="full">
 		<table>
 			<colgroup>
@@ -60,4 +23,49 @@
 			</tr>
 		</table>
 	</div>
+	<button class='btn btn-default' data-toggle="modal" data-target="#myModal">
+		Edit this kegerator
+	</button>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop = "false">
+  		<div class="modal-dialog">
+    		<div class="modal-content">
+        		<div class="modal-body">
+        			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<form action="" method="post" name="kegerator">
+						{{ form.hidden_tag() }}
+						<p>
+							Name:<br>
+							{{ form.name }}<br>
+							{% for error in form.name.errors %}
+								<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+						</p>
+						<p>
+							CO2:<br>
+							{{ form.co2 }}<br>
+							{% for error in form.co2.errors %}
+								<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+						</p>
+						<p>
+							Keg:<br>
+							{{ form.kegs }}<br>
+							{% for error in form.kegs.errors %}
+								<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+						</p>
+						<p>
+							Floor:<br>
+							{{ form.floor_id }}<br>
+							{% for error in form.floor_id.errors %}
+								<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+						</p>
+						{{ form.submit }}
+					</form>
+	        	</div> <!-- closing modal body -->
+	      	</div> <!-- closing modal content -->
+	    </div> <!-- closing modal dialog -->
+	</div> <!-- closing modal -->
 {% endblock %}

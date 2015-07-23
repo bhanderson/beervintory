@@ -47,12 +47,12 @@ class KegeratorForm(Form):
 class FloorForm(Form):
     '''Form for each floor containing kegerators.
     A floor can have many kegerators'''
-    kegerators = SelectMultipleField()
+    kegerators = SelectMultipleField(coerce = int, validators=[Optional()])
     number = IntegerField()
     submit = SubmitField()
 
 class VoteForm(Form):
     """Form for making a new vote."""
-    beer = SelectMultipleField()
+    beer = SelectField()
     rating = IntegerField()
     submit = SubmitField()

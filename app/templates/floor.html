@@ -28,11 +28,7 @@
 						</p>
 						<p>
 							Kegerators:<br>
-							<ul>
-								{% for kegerator in form.kegerators %}
-								<li>{{ kegerator }}</li><br>
-									{% endfor %}
-							</ul>
+							{{ form.kegerators }}<br>
 							{% for error in form.kegerators.errors %}
 								<span style="color: red;">[{{ error }}]</span>
 							{% endfor %}

@@ -21,11 +21,15 @@ class Kegerator(db.Model):
     '''Has a relationship to the keg it contains and the floor it is on, there
     are columns that are not used yet'''
     id = db.Column(db.Integer, primary_key=True)
-    clean_date = db.Column(db.Date)
+    # Info
     co2 = db.Column(db.Boolean)
-    keg_id = db.Column(db.Integer, db.ForeignKey('keg.id'))
+    name = db.Column(db.String(32), unique=True)
+    # Dates
+    clean_date = db.Column(db.Date)
+    co2_date = db.Column(db.Date)
+    # Relationships
     floor_id = db.Column(db.Integer, db.ForeignKey('floor.id'))
-    name = db.Column(db.String(32))
+    keg_id = db.Column(db.Integer, db.ForeignKey('keg.id'))
 
     def __repr__(self):
         return '{0}'.format(self.name)
@@ -34,12 +38,20 @@ class Keg(db.Model):
     '''Keg has a foreign_key relationship to a beer and general information
     about the keg'''
     id = db.Column(db.Integer, primary_key=True)
+    # Relationships
     beer_id  = db.Column(db.Integer, db.ForeignKey('beer.id'))
-    chilled = db.Column(db.Boolean)
-    filled = db.Column(db.Boolean)
-    stocked = db.Column(db.Boolean)
     kegerator = db.relationship('Kegerator', backref='keg')
+    # Info
+    chilled = db.Column(db.Boolean)
+    filled = db.Column(db.Integer)
+    stocked = db.Column(db.Boolean)
     tapped = db.Column(db.Boolean)
+    # Dates
+    chilled_date = db.Column(db.Date)
+    empty_date = db.Column(db.Date)
+    filled_date = db.Column(db.Date)
+    stocked_date = db.Column(db.Date)
+    tapped_date = db.Column(db.Date)
 
     def __repr__(self):
         cold = "Warm"
@@ -57,14 +69,18 @@ class Keg(db.Model):
 class Beer(db.Model):
     '''Most basic model. Has a backwards relationship to the keg it is in'''
     id = db.Column(db.Integer, primary_key=True)
+    # beer info
     abv = db.Column(db.Float(precision=4))
-    ba_score = db.Column(db.Integer)
     brewer = db.Column(db.String(64), index=True)
-    isi_score = db.Column(db.Integer)
-    keg = db.relationship('Keg', backref='beer')
-    link = db.Column(db.String(128))
     name = db.Column(db.String(64), index=True)
     style = db.Column(db.String(64), index=True)
+    # misc
+    ba_score = db.Column(db.Integer)
+    keg = db.relationship('Keg', backref='beer')
+    link = db.Column(db.String(128), unique=True)
+    # voting
+    isi_score = db.Column(db.Integer)
+    votes = db.Column(db.Integer)
 
     def __repr__(self):
         return "{0} {1} | {2}".format(self.name, self.style, self.brewer)

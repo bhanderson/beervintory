@@ -2,7 +2,7 @@ from flask.ext.wtf import Form
 from wtforms import (TextField, DecimalField, IntegerField, SelectField,
 SubmitField, DateField, BooleanField, SelectMultipleField)
 from wtforms.fields import FormField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Optional
 from . import models
 
 from wtforms_alchemy import ModelForm, ModelFieldList
@@ -33,7 +33,7 @@ class KegeratorForm(Form):
     '''Form for each Kegerator containing a keg.
     Each kegerator is on a floor and has a keg'''
     floor = SelectField(coerce = int)
-    keg = SelectField(coerce = int)
+    keg = SelectField(coerce = int, validators=[Optional()])
     co2 = BooleanField()
     name = TextField('Name')
     submit = SubmitField()

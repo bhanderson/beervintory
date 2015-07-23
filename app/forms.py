@@ -36,9 +36,11 @@ class KegForm(Form):
 class KegeratorForm(Form):
     '''Form for each Kegerator containing a keg.
     Each kegerator is on a floor and has a keg'''
-    floor = SelectField(coerce = int)
-    keg = SelectField(coerce = int, validators=[Optional()])
+    clean_date = DateField()
     co2 = BooleanField()
+    co2_date = DateField()
+    floor_id = SelectField(coerce = int)
+    kegs = SelectMultipleField(coerce = int, validators=[Optional()])
     name = TextField('Name')
     submit = SubmitField()
 

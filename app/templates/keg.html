@@ -1,40 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
+	<script>
+		$(window).load( function() {
+			var beerColors = {
+				'Pale Ale' : '#FACA4C',
+				'Amber' : '#B15F0C'
+			};
+			var beerHeight = 2 + ($('.keg-content').height() - 2) * $('#filled')[0].value / 100;
+			$('#beer').height(beerHeight);
+			var beerColor = $('#beer-info').text().trim();
+			$('#beer').css('background-color', beerColors[beerColor]);
+			var airHeight = $('.keg-content').height() - beerHeight;
+			$('#air').height(airHeight);
+		});
+	</script>
 	<div class="obj">
 		{% if keg %}
+			<div id='beer-info'>
+				{{ keg.beer.style }}
+			</div>
+			<div class='keg-visual'>
+				<div class='keg-top'></div>
+				<div class='keg-body'>
+					<div class='keg-content'>
+						<div id='air'></div>
+						<div id='beer'></div>
+					</div>
+				</div>
+			</div>
 			{{ keg }}
 		{% endif %}
 	</div>
 	<form action="" method="post" name="keg" class="fields">
 		{{ form.hidden_tag() }}
 		<p>
-			Beer:<br>
+			Beer:
 			{{ form.beer }}<br>
 			{% for error in form.beer.errors %}
 				<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 		</p>
 		<p>
-			Chilled:<br>
+			Chilled:
 			{{ form.chilled }}<br>
 			{% for error in form.chilled.errors %}
 				<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 		</p>
-			Filled:<br>
-			{{ form.filled }}<br>
+		<p>
+			Filled:
+			{{ form.filled }}%<br>
 			{% for error in form.filled.errors %}
 				<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
+		</p>
 		<p>
-			Tapped:<br>
+			Tapped:
 			{{ form.tapped }}<br>
 			{% for error in form.tapped.errors %}
 				<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 		</p>
 		<p>
-			Stocked:<br>
+			Stocked:
 			{{ form.stocked }}
 		</p>
 		<p>

@@ -2,64 +2,14 @@
 {% block content %}
     <form action="" method="post" name="floor">
 	{{ form.hidden_tag() }}
-		<p>
-			Brewer:<br>
-			{{ form.brewer}}
-			{% for error in form.brewer.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Name:<br>
-			{{ form.name }}
-			{% for error in form.name.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Style:<br>
-			{{ form.style }}
-			{% for error in form.style.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			ABV:<br>
-			{{ form.abv }}
-			{% for error in form.abv.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Beer Advocate Score:<br>
-			{{ form.ba_score }}
-			{% for error in form.ba_score.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Isilon Score:<br>
-			{{ form.isi_score }}
-			{% for error in form.isi_score.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Kegs:<br>
-			{{ form.kegs }}
-			{% for error in form.kegs.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Beer Advocate Link:<br>
-			{{ form.link }}
-			{% for error in form.link.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-        <p>
-            {{ form.submit }}
-        </p>
+	{% for name, field in form._fields.items() %}
+	{% if name != 'csrf_token' %}
+		{{ field.label }}<br>
+		{{ field }}<br>
+		{% for error in field.errors %}
+		<span style="color: red;">[{{ error }}]</span><br>
+		{% endfor %}
+	{% endif %}
+	{% endfor %}
     </form>
 {% endblock %}

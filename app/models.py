@@ -25,7 +25,7 @@ class Kegerator(db.Model):
     clean_date = db.Column(db.Date)
     co2_date = db.Column(db.Date)
     # Relationships
-    floor_id = db.Column(db.Integer, db.ForeignKey('floor.id'))
+    floor_id = db.Column(db.Integer, db.ForeignKey('floor.id'), default=None)
     kegs = db.relationship("Keg", backref="kegerator")
 
     def __repr__(self):

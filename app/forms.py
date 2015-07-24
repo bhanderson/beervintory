@@ -10,7 +10,7 @@ from wtforms_alchemy import ModelForm, ModelFieldList
 class FloorForm(Form):
     '''Form for each floor containing kegerators.
     A floor can have many kegerators'''
-    kegerators = SelectMultipleField(validators=[Optional()])
+    kegerators = SelectMultipleField(coerce = int, validators=[Optional()])
     number = IntegerField()
     submit = SubmitField()
 
@@ -43,14 +43,14 @@ class KegForm(Form):
 class BeerForm(Form):
     '''Form for beer.
     Information about the beer'''
-    abv = DecimalField('abv', places=2)
-    ba_score = IntegerField('ba', validators=[Optional()])
-    brewer = TextField('brewer')
-    isi_score = IntegerField('isi', validators=[Optional()])
-    kegs = SelectMultipleField(coerce = int, validators=[Optional()])
-    link = TextField('link')
-    name = TextField('name')
-    style = TextField('style')
+    abv = DecimalField('ABV:', places=2)
+    ba_score = IntegerField('Beer Advocate Score:', validators=[Optional()])
+    brewer = TextField('Brewer')
+    isi_score = IntegerField('Isilon Score', validators=[Optional()])
+    kegs = SelectMultipleField('Kegerators', coerce = int, validators=[Optional()])
+    link = TextField('Beer Advocate Link')
+    name = TextField('Name')
+    style = TextField('Style')
     submit = SubmitField()
 
 class VoteForm(Form):

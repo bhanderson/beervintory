@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="" method="post" name="floor">
+	{{ form.hidden_tag() }}
+		<p>
+			Beer:<br>
+			{{ form.beer_id }}
+			{% for error in form.beer_id.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Chilled:<br>
+			{{ form.chilled }}
+			{% for error in form.chilled.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Chilled Date:<br>
+			{{ form.chilled_date}}
+			{% for error in form.chilled_date.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Empty Date:<br>
+			{{ form.empty_date }}
+			{% for error in form.empty_date.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Filled:<br>
+			{{ form.filled }}
+			{% for error in form.filled.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Kegerator:<br>
+			{{ form.kegerator_id }}
+			{% for error in form.kegerator_id.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Stocked:<br>
+			{{ form.stocked }}
+			{% for error in form.stocked.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Stocked Date:<br>
+			{{ form.stocked_date }}
+			{% for error in form.stocked_date.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Tapped:<br>
+			{{ form.tapped }}
+			{% for error in form.tapped.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			Tapped Date:<br>
+			{{ form.tapped_date }}
+			{% for error in form.tapped_date.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+		</p>
+        <p>
+            {{ form.submit }}
+        </p>
+    </form>
+{% endblock %}

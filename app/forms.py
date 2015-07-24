@@ -28,7 +28,7 @@ class KegeratorForm(Form):
 class KegForm(Form):
     '''Form for a keg containing beer.
     Each keg has a beer and information about the keg.'''
-    beer_id = SelectField(coerce = int, validators=[DataRequired()])
+    beer_id = SelectField('Beer', coerce = int, validators=[DataRequired()])
     chilled = BooleanField()
     chilled_date = DateField()
     empty_date = DateField()

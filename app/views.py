@@ -236,12 +236,12 @@ def beer(id):
 
 @app.route('/beer/add', methods=['GET', 'POST'])
 @auth.requires_auth
-def edit_beer(id):
+def edit_beer():
     form = BeerForm()
     kegs = models.Keg.query.all()
     form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
     # create the beer
-    new_beer - models.Beer()
+    new_beer = models.Beer()
     if form.validate_on_submit():
         new_beer.abv = form.abv.data
         new_beer.ba_score = form.ba_score.data
@@ -253,7 +253,7 @@ def edit_beer(id):
         new_beer.style = form.style.data
         db.session.add(new_beer)
         db.session.commit()
-        return redirect("/floor/{0}".format(new_beer.id), 302)
+        return redirect("/beer/{0}".format(new_beer.id), 302)
     return render_template('beer_add.html',
             form=form)
 

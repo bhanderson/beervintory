@@ -48,7 +48,7 @@ class KegeratorForm(Form):
 class FloorForm(Form):
     '''Form for each floor containing kegerators.
     A floor can have many kegerators'''
-    kegerators = SelectMultipleField(coerce = int, validators=[Optional()])
+    kegerators = SelectMultipleField(validators=[Optional()])
     number = IntegerField()
     submit = SubmitField()
 

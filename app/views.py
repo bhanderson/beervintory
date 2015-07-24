@@ -29,13 +29,12 @@ def floor(id):
     kegerators = models.Kegerator.query.all()
     form.kegerators.choices = [(k.id, k.__repr__()) for k in kegerators]
     # fill out form
-    form.kegerators = floor.kegerators
-    form.number.data = floor.number
+    if request.method == "GET":
+        form.kegerators.data = floor.kegerators
+        form.number.data = floor.number
     if form.validate_on_submit():
         floor.number = form.number.data
-        floor.kegerators = form.kegerators
-        print(form.number.data)
-        print(floor.number)
+        floor.kegerators = form.kegerators.data
         db.session.commit()
     return render_template('floor.html',
             floor = floor,

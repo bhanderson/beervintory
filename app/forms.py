@@ -55,6 +55,6 @@ class BeerForm(Form):
 
 class VoteForm(Form):
     """Form for making a new vote."""
-    beer = SelectField()
+    beer_id = SelectField('Beer', coerce=int)
     rating = IntegerField()
     submit = SubmitField()

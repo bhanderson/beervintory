@@ -1,6 +1,7 @@
+import datetime
 from flask import render_template, flash, request, redirect
 from app import app, db, models
-from .forms import BeerForm, KegForm, KegeratorForm, FloorForm
+from .forms import BeerForm, KegForm, KegeratorForm, FloorForm, VoteForm
 from . import auth
 
 
@@ -199,3 +200,23 @@ def edit_beer():
     return render_template('beer_add.html',
             form=form)
 
+@app.route('/vote', methods=['GET', 'POST'])
+def vote():
+    beers = models.Beer.query.all()
+    form = VoteForm()
+    form.beer_id.choices = [(b.id, b.__repr__()) for b in beers]
+    if form.validate_on_submit():
+        vote = models.Vote()
+        vote.created = datetime.date.today()
+        vote.rating = form.rating.data
+        vote.beer_id = form.beer_id.data
+        beer = models.Beer.query.get(form.beer_id.data)
+        total_votes = models.Vote.query.filter(models.Vote.beer_id==form.beer_id.data).count()
+        current_score = beer.isi_score
+        new_score = (current_score * total_votes + vote.rating) / (total_votes + 1)
+        beer.isi_score = new_score
+        db.session.add(vote)
+        db.session.commit()
+    return render_template('vote.html',
+            form=form,
+            beers=beers)

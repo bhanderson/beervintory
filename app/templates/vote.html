@@ -1,0 +1,6 @@
+{% import 'macros.html' as macros %}
+{% extends "base.html" %}
+{% block content %}
+<h1>Vote for the next beer</h1>
+	{{ macros.list_fields(form) }}
+{% endblock %}

@@ -28,6 +28,7 @@ def floor(id):
     form = FloorForm(obj=floor)
     kegerators = models.Kegerator.query.all()
     form.kegerators.choices = [(k.id, k.__repr__()) for k in kegerators]
+    form.kegerators.choices.insert(0, (0, ''))
     if form.validate_on_submit():
         form.populate_obj(floor)
         db.session.commit()
@@ -43,6 +44,7 @@ def add_floor():
     form = FloorForm()
     kegerators = models.Kegerator.query.all()
     form.kegerators.choices = [(k, k.__repr__()) for k in kegerators]
+    form.kegerators.choices.insert(0, (0, ''))
     # Create the floor
     new_floor = models.Floor()
     if form.validate_on_submit():
@@ -69,7 +71,9 @@ def kegerator(id):
     floors = models.Floor.query.all()
     kegs = models.Keg.query.all()
     form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    form.kegs.choices.insert(0, (0, ''))
     form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
+    form.floor_id.choices.insert(0, (0, ''))
     # Update model
     if form.validate_on_submit():
         form.populate_obj(kegerator)
@@ -85,8 +89,10 @@ def add_kegerator():
     form = KegeratorForm()
     floors = models.Floor.query.all()
     form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
+    form.floor_id.choices.insert(0, (0, ''))
     kegs = models.Keg.query.all()
     form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    form.kegs.choices.insert(0, (0, ''))
     # Create the kegerator
     new_kegerator = models.Kegerator()
     if form.validate_on_submit():
@@ -121,7 +127,9 @@ def keg(id):
     beers = models.Beer.query.all()
     kegerators = models.Kegerator.query.all()
     form.beer_id.choices = [(b.id, b.__repr__()) for b in beers]
+    form.beer_id.choices.insert(0, (0, ''))
     form.kegerator_id.choices = [(k.id, k.__repr__()) for k in kegerators]
+    form.kegerator_id.choices.insert(0, (0, ''))
     # Update model
     if form.validate_on_submit():
         form.populate_obj(keg)
@@ -137,8 +145,10 @@ def add_keg():
     form = KegForm()
     beers = models.Beer.query.all()
     form.beer_id.choices = [(b.id, b.__repr__()) for b in beers]
+    form.beer_id.choices.insert(0, (0, ''))
     kegerators = models.Kegerator.query.all()
     form.kegerator_id.choices = [(k.id, k.__repr__()) for k in kegerators]
+    form.kegerator_id.choices.insert(0, (0, ''))
     # Create the keg
     new_keg = models.Keg()
     if form.validate_on_submit():
@@ -164,6 +174,7 @@ def beer(id):
     form = BeerForm(obj=beer)
     kegs = models.Keg.query.all()
     form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    form.kegs.choices.insert(0, (0, ''))
     if form.validate_on_submit():
         form.populate_obj(beer)
         db.session.commit()
@@ -177,6 +188,7 @@ def edit_beer():
     form = BeerForm()
     kegs = models.Keg.query.all()
     form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    form.kegs.choices.insert(0, (0, ''))
     # create the beer
     new_beer = models.Beer()
     if form.validate_on_submit():

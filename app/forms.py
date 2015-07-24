@@ -30,23 +30,23 @@ class KegForm(Form):
     Each keg has a beer and information about the keg.'''
     beer_id = SelectField('Beer', coerce = int, validators=[DataRequired()])
     chilled = BooleanField()
-    chilled_date = DateField()
-    empty_date = DateField()
+    chilled_date = DateField(validators=[Optional()])
+    empty_date = DateField(validators=[Optional()])
     filled = IntegerField('filled')
     kegerator_id = SelectField(coerce = int, validators=[Optional()])
     stocked = BooleanField('stocked')
     stocked_date = DateField()
     submit = SubmitField()
     tapped = BooleanField()
-    tapped_date = DateField()
+    tapped_date = DateField(validators=[Optional()])
 
 class BeerForm(Form):
     '''Form for beer.
     Information about the beer'''
     abv = DecimalField('abv', places=2)
-    ba_score = IntegerField('ba')
+    ba_score = IntegerField('ba', validators=[Optional()])
     brewer = TextField('brewer')
-    isi_score = IntegerField('isi')
+    isi_score = IntegerField('isi', validators=[Optional()])
     kegs = SelectMultipleField(coerce = int, validators=[Optional()])
     link = TextField('link')
     name = TextField('name')

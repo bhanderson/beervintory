@@ -51,8 +51,8 @@ def add_floor():
     # Create the floor
     new_floor = models.Floor()
     if form.validate_on_submit():
-        new_floor.number = form.number.data
         new_floor.kegerators = form.kegerators.data
+        new_floor.number = form.number.data
         db.session.add(new_floor)
         db.session.commit()
         return redirect("/floor/{0}".format(new_floor.id), 302)

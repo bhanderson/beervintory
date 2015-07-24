@@ -10,35 +10,35 @@ from wtforms_alchemy import ModelForm, ModelFieldList
 class FloorForm(Form):
     '''Form for each floor containing kegerators.
     A floor can have many kegerators'''
-    kegerators = SelectMultipleField(coerce = int, validators=[Optional()])
-    number = IntegerField()
+    kegerators = SelectMultipleField('Kegerators', validators=[Optional()])
+    number = IntegerField('Floor Number')
     submit = SubmitField()
 
 class KegeratorForm(Form):
     '''Form for each Kegerator containing a keg.
     Each kegerator is on a floor and has a keg'''
-    clean_date = DateField()
-    co2 = BooleanField()
-    co2_date = DateField()
-    floor_id = SelectField(coerce = int, validators=[Optional()])
-    kegs = SelectMultipleField(coerce = int, validators=[Optional()])
+    clean_date = DateField('Clean Date')
+    co2 = BooleanField('CO2')
+    co2_date = DateField('CO2 Date')
+    floor_id = SelectField('Floor', coerce=int, validators=[Optional()])
+    kegs = SelectMultipleField('Kegs', coerce = int, validators=[Optional()])
     name = TextField('Name')
     submit = SubmitField()
 
 class KegForm(Form):
     '''Form for a keg containing beer.
     Each keg has a beer and information about the keg.'''
-    beer_id = SelectField('Beer', coerce = int, validators=[DataRequired()])
-    chilled = BooleanField()
-    chilled_date = DateField(validators=[Optional()])
-    empty_date = DateField(validators=[Optional()])
-    filled = IntegerField('filled')
-    kegerator_id = SelectField(coerce = int, validators=[Optional()])
-    stocked = BooleanField('stocked')
-    stocked_date = DateField()
+    beer_id = SelectField('Beer', coerce=int, validators=[DataRequired()])
+    chilled = BooleanField('Chilled')
+    chilled_date = DateField('Chilled Date', validators=[Optional()])
+    empty_date = DateField('Empty Date', validators=[Optional()])
+    filled = IntegerField('Filled')
+    kegerator_id = SelectField('Kegerator', coerce=int, validators=[Optional()])
+    stocked = BooleanField('Stocked')
+    stocked_date = DateField('Stocked Date')
     submit = SubmitField()
-    tapped = BooleanField()
-    tapped_date = DateField(validators=[Optional()])
+    tapped = BooleanField('Tapped')
+    tapped_date = DateField('Tapped Date', validators=[Optional()])
 
 class BeerForm(Form):
     '''Form for beer.

@@ -1,3 +1,4 @@
+{% import 'macros.html' as macros %}
 {% extends "base.html" %}
 {% block content %}
 <script>
@@ -6,7 +7,7 @@ $(window).load( function() {
 		'Pale Ale' : '#FACA4C',
 		'Amber' : '#B15F0C'
 	};
-	var beerHeight = 2 + ($('.keg-content').height() - 2) * $('#filled')[0].value / 100;
+	var beerHeight = ($('.keg-content').height() - 2) * $('#filled')[0].value / 100;
 	$('#beer').height(beerHeight);
 	var beerColor = $('#beer-info').text().trim();
 	$('#beer').css('background-color', beerColors[beerColor]);
@@ -65,50 +66,7 @@ $(window).load( function() {
 		<div class="modal-content">
 			<div class="modal-body">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<form action="" method="post" name="keg" class="fields">
-					{{ form.hidden_tag() }}
-					<p>
-					Beer:
-					{{ form.beer_id }}<br>
-					{% for error in form.beer_id.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Chilled:
-					{{ form.chilled }}<br>
-					{% for error in form.chilled.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Filled:
-					{{ form.filled }}%<br>
-					{% for error in form.filled.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Tapped:
-					{{ form.tapped }}<br>
-					{% for error in form.tapped.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Stocked:
-					{{ form.stocked }}
-					</p>
-					<p>
-					{{ form.submit }}
-					</p>
-					Kegerator:
-					{{ form.kegerator_id }}
-					</p>
-					<p>
-					{{ form.submit }}
-					</p>
-				</form>
+				{{ macros.list_fields(form) }}
 			</div> <!-- closing modal body -->
 		</div> <!-- closing modal content -->
 	</div> <!-- closing modal dialog -->

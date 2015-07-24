@@ -1,35 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-    <form action="" method="post" name="beer" class="fields">
-        {{ form.hidden_tag() }}
-        <p>
-            Name:<br>
-            {{ form.name }}<br>
-            {% for error in form.name.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            CO2:<br>
-            {{ form.co2 }}<br>
-            {% for error in form.co2.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            Keg:<br>
-            {{ form.kegs }}<br>
-            {% for error in form.kegs.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            Floor:<br>
-            {{ form.floor_id }}<br>
-            {% for error in form.floor_id.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p><input type="Submit" value="Submit"></p>
-    </form>
+	{% import 'macros.html' as macros %}
+	{{ macros.list_fields(form) }}
 {% endblock %}

@@ -1,3 +1,4 @@
+{% import 'macros.html' as macros %}
 {% extends "base.html" %}
 {% block content %}
 <div class="full">
@@ -29,26 +30,7 @@
 		<div class="modal-content">
 			<div class="modal-body">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<form action="" method="post" name="floor">
-					{{ form.hidden_tag() }}
-					<p>
-					Number:<br>
-					{{ form.number }}<br>
-					{% for error in form.number.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Kegerators:<br>
-					{{ form.kegerators }}<br>
-					{% for error in form.kegerators.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					{{ form.submit }}
-					</p>
-				</form>
+				{{ macros.list_fields(form) }}
 			</div> <!-- closing modal body -->
 		</div> <!-- closing modal content -->
 	</div> <!-- closing modal dialog -->

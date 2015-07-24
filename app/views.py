@@ -28,10 +28,6 @@ def floor(id):
     form = FloorForm(obj=floor)
     kegerators = models.Kegerator.query.all()
     form.kegerators.choices = [(k.id, k.__repr__()) for k in kegerators]
-    # fill out form
-    if request.method == "GET":
-        form.kegerators.data = floor.kegerators
-        form.number.data = floor.number
     if form.validate_on_submit():
         form.populate_obj(floor)
         db.session.commit()
@@ -46,7 +42,7 @@ def add_floor():
     # Create the form
     form = FloorForm()
     kegerators = models.Kegerator.query.all()
-    form.kegerators.choices = [(k.id, k.__repr__()) for k in kegerators]
+    form.kegerators.choices = [(k, k.__repr__()) for k in kegerators]
     # Create the floor
     new_floor = models.Floor()
     if form.validate_on_submit():
@@ -71,12 +67,12 @@ def kegerator(id):
     kegerator = models.Kegerator.query.get_or_404(id)
     form = KegeratorForm(obj=kegerator)
     floors = models.Floor.query.all()
-    form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
     kegs = models.Keg.query.all()
     form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
     # Update model
     if form.validate_on_submit():
-        form.populate_obj(keg)
+        form.populate_obj(kegerator)
         db.session.commit()
     return render_template('kegerator.html',
             kegerator = kegerator,
@@ -123,8 +119,8 @@ def keg(id):
     keg = models.Keg.query.get_or_404(id)
     form = KegForm(obj=keg)
     beers = models.Beer.query.all()
-    form.beer_id.choices = [(b.id, b.__repr__()) for b in beers]
     kegerators = models.Kegerator.query.all()
+    form.beer_id.choices = [(b.id, b.__repr__()) for b in beers]
     form.kegerator_id.choices = [(k.id, k.__repr__()) for k in kegerators]
     # Update model
     if form.validate_on_submit():

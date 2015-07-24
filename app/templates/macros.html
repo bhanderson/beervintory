@@ -1,0 +1,19 @@
+{% macro list_fields(form) -%}
+    <form action="" method="post" name="">
+	{{ form.hidden_tag() }}
+	{% for name, field in form._fields.items() %}
+	{% if name != 'csrf_token' %}
+	{% if name != 'submit' %}
+		{{ field.label }}<br>
+		{{ field }}<br>
+		{% for error in field.errors %}
+		<span style="color: red;">[{{ error }}]</span><br>
+		{% endfor %}
+	{% endif %}
+	{% endif %}
+	{% endfor %}
+	<br>
+	{{ form.submit }}
+    </form>
+{% endmacro %}
+

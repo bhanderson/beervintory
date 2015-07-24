@@ -1,3 +1,4 @@
+{% import 'macros.html' as macros %}
 {% extends "base.html" %}
 {% block content %}
 <div class="obj">
@@ -8,7 +9,7 @@
 <div class="full">
 	<table>
 		<colgroup>
-			<col span="1", style="background-color:yellow">
+			<col span="1", style="background-color:lightblue">
 		</colgroup>
 		<tr>
 			<th><strong>Name:</strong></th>
@@ -48,61 +49,7 @@
 		<div class="modal-content">
 			<div class="modal-body">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<form action="" method="post" name="beer" class="fields">
-					{{ form.hidden_tag() }}
-					<p>
-					Name:<br>
-					{{ form.name }}<br>
-					{% for error in form.name.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Style:<br>
-					{{ form.style }}<br>
-					{% for error in form.style.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Brewer:<br>
-					{{ form.brewer }}<br>
-					{% for error in form.brewer.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					ABV:<br>
-					{{ form.abv }}<br>
-					{% for error in form.name.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Beer Advocate Score:<br>
-					{{ form.ba_score }}<br>
-					{% for error in form.name.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Isi Score:<br>
-					{{ form.isi_score }}<br>
-					{% for error in form.name.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					Link:<br>
-					{{ form.link }}<br>
-					{% for error in form.name.errors %}
-					<span style="color: red;">[{{ error }}]</span>
-					{% endfor %}
-					</p>
-					<p>
-					{{ form.submit }}
-					</p>
-				</form>
+				{{ macros.list_fields(form) }}
 			</div> <!-- closing modal body -->
 		</div> <!-- closing modal content -->
 	</div> <!-- closing modal dialog -->

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+<div class='col-xs-10 col-xs-offset-1'>
+
 <div class="list">
 	<ul>
 		<li><a href="{{url_for('keg', id='add')}}"><strong>Add Keg</strong></li>
@@ -11,5 +13,6 @@
 		</ul>
 		{% endfor %}
 	{% endif %}
+</div>
 </div>
 {% endblock %}

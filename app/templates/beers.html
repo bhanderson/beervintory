@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="list">
-	<ul>
-		<li><a href="{{url_for('beer', id='add')}}"><strong>Add Beer</strong></li>
-	</ul>
-	{% if beers %}
-		{% for beer in beers %}
+<div class='col-xs-10 col-xs-offset-1'>
+	<div class="list">
 		<ul>
-			<li><a href="{{url_for('beer', id=beer.id)}}">{{beer}}</li>
+			<li><a href="{{url_for('beer', id='add')}}"><strong>Add Beer</strong></a></li>
 		</ul>
-		{% endfor %}
-	{% endif %}
+		{% if beers %}
+			{% for beer in beers %}
+			<ul>
+				<li><a href="{{url_for('beer', id=beer.id)}}">{{beer}}</a></li>
+			</ul>
+			{% endfor %}
+		{% endif %}
+	</div>
 </div>
 {% endblock %}

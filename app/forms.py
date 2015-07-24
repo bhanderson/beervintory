@@ -17,7 +17,7 @@ class FloorForm(Form):
 class KegeratorForm(Form):
     '''Form for each Kegerator containing a keg.
     Each kegerator is on a floor and has a keg'''
-    clean_date = DateField('Clean Date')
+    clean_date = DateField('Clean Date (YYYY-MM-DD)')
     co2 = BooleanField('CO2')
     co2_date = DateField('CO2 Date')
     floor_id = SelectField('Floor', coerce=int, validators=[Optional()])
@@ -30,15 +30,15 @@ class KegForm(Form):
     Each keg has a beer and information about the keg.'''
     beer_id = SelectField('Beer', coerce=int, validators=[DataRequired()])
     chilled = BooleanField('Chilled')
-    chilled_date = DateField('Chilled Date', validators=[Optional()])
-    empty_date = DateField('Empty Date', validators=[Optional()])
+    chilled_date = DateField('Chilled Date (YYYY-MM-DD)', validators=[Optional()])
+    empty_date = DateField('Empty Date (YYYY-MM-DD)', validators=[Optional()])
     filled = IntegerField('Filled')
     kegerator_id = SelectField('Kegerator', coerce=int, validators=[Optional()])
     stocked = BooleanField('Stocked')
-    stocked_date = DateField('Stocked Date')
+    stocked_date = DateField('Stocked Date (YYYY-MM-DD)')
     submit = SubmitField()
     tapped = BooleanField('Tapped')
-    tapped_date = DateField('Tapped Date', validators=[Optional()])
+    tapped_date = DateField('Tapped Date (YYYY-MM-DD)', validators=[Optional()])
 
 class BeerForm(Form):
     '''Form for beer.

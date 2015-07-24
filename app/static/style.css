@@ -67,6 +67,10 @@ table, th, td{
 	background-color: #ffffff;
 }
 
+.list{
+	font-size:20px;
+}
+
 #beer-info {
 	display: none;
 }

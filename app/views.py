@@ -208,7 +208,7 @@ def vote():
     if form.validate_on_submit():
         vote = models.Vote()
         vote.created = datetime.date.today()
-        vote.rating = form.rating.data
+        vote.rating = abs(form.rating.data) % 101
         vote.beer_id = form.beer_id.data
         beer = models.Beer.query.get(form.beer_id.data)
         total_votes = models.Vote.query.filter(models.Vote.beer_id==form.beer_id.data).count()

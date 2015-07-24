@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="list">
 	<ul>
-		<li><a href="{{url_for('beer', id='add')}}">Add Beer</li>
+		<li><a href="{{url_for('beer', id='add')}}"><strong>Add Beer</strong></li>
 	</ul>
 	{% if beers %}
 		{% for beer in beers %}
@@ -10,4 +11,5 @@
 		</ul>
 		{% endfor %}
 	{% endif %}
+</div>
 {% endblock %}

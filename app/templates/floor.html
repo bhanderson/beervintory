@@ -11,7 +11,7 @@
 			<th>{{ floor}}</th>
 		</tr>
 		<tr>
-			<th><strong>Kegs:</strong></th>
+			<th><strong>Kegerators:</strong></th>
 			{% for keger in floor.kegerators %}
 				<th>
 					<a href="{{url_for('kegerator', id=keger.id)}}">{{keger}}</a>

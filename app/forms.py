@@ -7,16 +7,22 @@ from . import models
 
 from wtforms_alchemy import ModelForm, ModelFieldList
 
-class BeerForm(Form):
-    '''Form for beer.
-    Information about the beer'''
-    abv = DecimalField('abv', places=2)
-    ba_score = IntegerField('ba')
-    brewer = TextField('brewer')
-    isi_score = IntegerField('isi')
-    link = TextField('link')
-    name = TextField('name')
-    style = TextField('style')
+class FloorForm(Form):
+    '''Form for each floor containing kegerators.
+    A floor can have many kegerators'''
+    kegerators = SelectMultipleField(validators=[Optional()])
+    number = IntegerField()
+    submit = SubmitField()
+
+class KegeratorForm(Form):
+    '''Form for each Kegerator containing a keg.
+    Each kegerator is on a floor and has a keg'''
+    clean_date = DateField()
+    co2 = BooleanField()
+    co2_date = DateField()
+    floor_id = SelectField(coerce = int)
+    kegs = SelectMultipleField(coerce = int, validators=[Optional()])
+    name = TextField('Name')
     submit = SubmitField()
 
 class KegForm(Form):
@@ -34,22 +40,17 @@ class KegForm(Form):
     tapped = BooleanField()
     tapped_date = DateField()
 
-class KegeratorForm(Form):
-    '''Form for each Kegerator containing a keg.
-    Each kegerator is on a floor and has a keg'''
-    clean_date = DateField()
-    co2 = BooleanField()
-    co2_date = DateField()
-    floor_id = SelectField(coerce = int)
+class BeerForm(Form):
+    '''Form for beer.
+    Information about the beer'''
+    abv = DecimalField('abv', places=2)
+    ba_score = IntegerField('ba')
+    brewer = TextField('brewer')
+    isi_score = IntegerField('isi')
     kegs = SelectMultipleField(coerce = int, validators=[Optional()])
-    name = TextField('Name')
-    submit = SubmitField()
-
-class FloorForm(Form):
-    '''Form for each floor containing kegerators.
-    A floor can have many kegerators'''
-    kegerators = SelectMultipleField(validators=[Optional()])
-    number = IntegerField()
+    link = TextField('link')
+    name = TextField('name')
+    style = TextField('style')
     submit = SubmitField()
 
 class VoteForm(Form):

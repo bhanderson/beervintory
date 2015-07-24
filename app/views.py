@@ -52,7 +52,7 @@ def add_floor():
     new_floor = models.Floor()
     if form.validate_on_submit():
         new_floor.number = form.number.data
-        new_floor.kegerators = form.kegerators
+        new_floor.kegerators = form.kegerators.data
         db.session.add(new_floor)
         db.session.commit()
         return redirect("/floor/{0}".format(new_floor.id), 302)
@@ -69,7 +69,7 @@ def kegerators():
 @app.route('/kegerator/<id>', methods=['GET', 'POST'])
 @auth.requires_auth
 def kegerator(id):
-    '''Displays a certain kegerator or the page to create a kegerator'''
+    '''Displays a certain kegerator'''
     kegerator = models.Kegerator.query.get_or_404(id)
     form = KegeratorForm()
     floors = models.Floor.query.all()
@@ -77,12 +77,13 @@ def kegerator(id):
     kegs = models.Keg.query.all()
     form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
     # Fill out form
-    form.clean_date.data = kegerator.clean_date
-    form.co2.data = kegerator.co2
-    form.co2_date.data = kegerator.co2_date
-    form.floor_id.data = kegerator.floor_id
-    form.kegs.data = kegerator.kegs
-    form.name.data = kegerator.name
+    if request.method == "GET":
+        form.clean_date.data = kegerator.clean_date
+        form.co2.data = kegerator.co2
+        form.co2_date.data = kegerator.co2_date
+        form.floor_id.data = kegerator.floor_id
+        form.kegs.data = kegerator.kegs
+        form.name.data = kegerator.name
     # Update model
     if form.validate_on_submit():
         kegerator.clean_date = form.clean_date.data
@@ -91,13 +92,10 @@ def kegerator(id):
         kegerator.floor_id = form.floor_id.data
         kegerator.kegs = form.kegs.data
         kegerator.name = form.name.data
-        print(kegerator.floor_id)
-        print(form.floor_id.data)
         db.session.commit()
     return render_template('kegerator.html',
             kegerator = kegerator,
             form = form)
-
 
 @app.route('/kegerator/add', methods=['GET','POST'])
 @auth.requires_auth
@@ -141,19 +139,20 @@ def keg(id):
     kegerators = models.Kegerator.query.all()
     form.kegerator_id.choices = [(k.id, k.__repr__()) for k in kegerators]
     # Fill out form
-    form.beer_id.data = keg.beer_id
-    form.kegerator_id.data = keg.kegerator_id
-    form.chilled.data = keg.chilled
-    form.chilled_date.data = keg.chilled_date
-    form.empty_date.data = keg.empty_date
-    form.filled.data = keg.filled
-    form.stocked.data = keg.stocked
-    form.stocked_date.data = keg.stocked_date
-    form.tapped.data = keg.tapped
-    form.tapped_date.data = keg.tapped_date
+    if request.method == "GET":
+        form.beer_id.data = keg.beer_id
+        form.kegerator_id.data = keg.kegerator_id
+        form.chilled.data = keg.chilled
+        form.chilled_date.data = keg.chilled_date
+        form.empty_date.data = keg.empty_date
+        form.filled.data = keg.filled
+        form.stocked.data = keg.stocked
+        form.stocked_date.data = keg.stocked_date
+        form.tapped.data = keg.tapped
+        form.tapped_date.data = keg.tapped_date
     # Update model
     if form.validate_on_submit():
-        keg.beer_id = form.beer.data
+        keg.beer_id = form.beer_id.data
         keg.kegerator_id = form.kegerator_id.data
         keg.chilled_date = form.chilled_date.data
         keg.chilled = form.chilled.data
@@ -207,39 +206,54 @@ def beers():
 @auth.requires_auth
 def beer(id):
     '''Displays a certain beer or the pace to create a beer'''
+    beer = models.Beer.query.get_or_404(id)
     form = BeerForm()
-    if id == "add":
-        beer = models.Beer()
-    else:
-        beer = models.Beer.query.get(id)
-        if beer == None:
-            return render_template('404.html'), 404
-        elif request.method == "GET":
-            form.abv.data = beer.abv
-            form.ba_score.data = beer.ba_score
-            form.brewer.data = beer.brewer
-            form.isi_score.data = beer.isi_score
-            form.link.data = beer.link
-            form.name.data = beer.name
-            form.style.data = beer.style
-
-
+    kegs = models.Keg.query.all()
+    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    # fill out form
+    if request.method == "GET":
+        form.abv.data = beer.abv
+        form.ba_score.data = beer.ba_score
+        form.brewer.data = beer.brewer
+        form.isi_score.data = beer.isi_score
+        form.kegs.data = beer.kegs
+        form.link.data = beer.link
+        form.name.data = beer.name
+        form.style.data = beer.style
     if form.validate_on_submit():
-        beer.name=form.name.data
-        beer.style=form.style.data
-        beer.brewer=form.brewer.data
-        beer.abv=form.abv.data
-        beer.ba_score=form.ba_score.data
-        beer.isi_score=form.isi_score.data
-        beer.link=form.link.data
-        if id == "add":
-            db.session.add(beer)
+        beer.abv = form.abv.data
+        beer.ba_score = form.ba_score.data
+        beer.brewer = form.brewer.data
+        beer.isi_score = form.isi_score.data
+        beer.kegs = form.kegs.data
+        beer.link = form.link.data
+        beer.name = form.name.data
+        beer.style = form.style.data
         db.session.commit()
-        flash(beer)
     return render_template('beer.html',
             form=form,
             beer=beer)
 
-@app.route('/beer/<id>/edit')
+@app.route('/beer/add', methods=['GET', 'POST'])
+@auth.requires_auth
 def edit_beer(id):
-    return 'Hello World!'
+    form = BeerForm()
+    kegs = models.Keg.query.all()
+    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    # create the beer
+    new_beer - models.Beer()
+    if form.validate_on_submit():
+        new_beer.abv = form.abv.data
+        new_beer.ba_score = form.ba_score.data
+        new_beer.brewer = form.brewer.data
+        new_beer.isi_score = form.isi_score.data
+        new_beer.kegs = form.kegs.data
+        new_beer.link = form.link.data
+        new_beer.name = form.name.data
+        new_beer.style = form.style.data
+        db.session.add(new_beer)
+        db.session.commit()
+        return redirect("/floor/{0}".format(new_beer.id), 302)
+    return render_template('beer_add.html',
+            form=form)
+

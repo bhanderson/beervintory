@@ -1,102 +1,110 @@
 {% extends "base.html" %}
 {% block content %}
-	<div class="obj">
-		{% if beer %}
-			{{ beer }}
-		{% endif %}
-	</div>
-	<form action="" method="post" name="beer" class="fields">
-		{{ form.hidden_tag() }}
-		<p>
-			Name:<br>
-			{{ form.name }}<br>
-			{% for error in form.name.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Style:<br>
-			{{ form.style }}<br>
-			{% for error in form.style.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Brewer:<br>
-			{{ form.brewer }}<br>
-			{% for error in form.brewer.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			ABV:<br>
-			{{ form.abv }}<br>
-			{% for error in form.name.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Beer Advocate Score:<br>
-			{{ form.ba_score }}<br>
-			{% for error in form.name.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Isi Score:<br>
-			{{ form.isi_score }}<br>
-			{% for error in form.name.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			Link:<br>
-			{{ form.link }}<br>
-			{% for error in form.name.errors %}
-				<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.submit }}
-		</p>
-	</form>
-	<div class="full">
-		<table>
-			<colgroup>
-				<col span="1", style="background-color:yellow">
-			</colgroup>
-			<tr>
-				<th><strong>Name:</strong></th>
-				<th>{{ beer.name }}</th>
-			</tr>
-			<tr>
-				<th><strong>Style:</strong></th>
-				<th>{{ beer.style }}</th>
-			</tr>
-			<tr>
-				<th><strong>Brewer:</strong></th>
-				<th>{{ beer.brewer }}</th>
-			</tr>
-			<tr>
-				<th><strong>ABV:</strong></th>
-				<th>{{ beer.abv }}</th>
-			</tr>
-			<tr>
-				<th><strong>Beer Advocate Score:</strong></th>
-				<th>{{ beer.ba_score }}</th>
-			</tr>
-			<tr>
-				<th><strong>Isilon Score:</strong></th>
-				<th>{{ beer.isi_score }}</th>
-			</tr>
-			<tr>
-				<th><strong>Keg:</strong></th>
-				<th>{{ beer.keg }}</th>
-			</tr>
-			<tr>
-				<th><strong>Link:</strong></th>
-				<th><a href="{{ beer.link }}">{{beer}}</a></th>
-			</tr>
-		</table>
-	</div>
+<div class="obj">
+	{% if beer %}
+	{{ beer }}
+	{% endif %}
+</div>
+<div class="full">
+	<table>
+		<colgroup>
+			<col span="1", style="background-color:yellow">
+		</colgroup>
+		<tr>
+			<th><strong>Name:</strong></th>
+			<th>{{ beer.name }}</th>
+		</tr>
+		<tr>
+			<th><strong>Style:</strong></th>
+			<th>{{ beer.style }}</th>
+		</tr>
+		<tr>
+			<th><strong>Brewer:</strong></th>
+			<th>{{ beer.brewer }}</th>
+		</tr>
+		<tr>
+			<th><strong>ABV:</strong></th>
+			<th>{{ beer.abv }}</th>
+		</tr>
+		<tr>
+			<th><strong>Beer Advocate Score:</strong></th>
+			<th>{{ beer.ba_score }}</th>
+		</tr>
+		<tr>
+			<th><strong>Isilon Score:</strong></th>
+			<th>{{ beer.isi_score }}</th>
+		</tr>
+		<tr>
+			<th><strong>Link:</strong></th>
+			<th><a href="{{ beer.link }}">{{beer}}</a></th>
+		</tr>
+	</table>
+</div>
+<button class='btn btn-default' data-toggle="modal" data-target="#myModal">
+	Edit this Beer
+</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop = "false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<form action="" method="post" name="beer" class="fields">
+					{{ form.hidden_tag() }}
+					<p>
+					Name:<br>
+					{{ form.name }}<br>
+					{% for error in form.name.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+					</p>
+					<p>
+					Style:<br>
+					{{ form.style }}<br>
+					{% for error in form.style.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+					</p>
+					<p>
+					Brewer:<br>
+					{{ form.brewer }}<br>
+					{% for error in form.brewer.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+					</p>
+					<p>
+					ABV:<br>
+					{{ form.abv }}<br>
+					{% for error in form.name.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+					</p>
+					<p>
+					Beer Advocate Score:<br>
+					{{ form.ba_score }}<br>
+					{% for error in form.name.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+					</p>
+					<p>
+					Isi Score:<br>
+					{{ form.isi_score }}<br>
+					{% for error in form.name.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+					</p>
+					<p>
+					Link:<br>
+					{{ form.link }}<br>
+					{% for error in form.name.errors %}
+					<span style="color: red;">[{{ error }}]</span>
+					{% endfor %}
+					</p>
+					<p>
+					{{ form.submit }}
+					</p>
+				</form>
+			</div> <!-- closing modal body -->
+		</div> <!-- closing modal content -->
+	</div> <!-- closing modal dialog -->
+</div> <!-- closing modal -->
 {% endblock %}

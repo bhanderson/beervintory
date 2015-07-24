@@ -124,9 +124,14 @@ def add_kegerator():
 @app.route('/kegs')
 def kegs():
     '''Displays all kegs'''
-    return render_template('kegs.html',
-            kegs=sorted(models.Keg.query.all(), key=lambda x: x.beer.name,
-                reverse=False))
+    kegs = models.Keg.query.all()
+    if kegs:
+        return render_template('kegs.html',
+                kegs=sorted(models.Keg.query.all(), key=lambda x: x.beer.name,
+                    reverse=False))
+    else:
+        return render_template('kegs.html',
+                kegs=None)
 
 @app.route('/keg/<id>', methods=['GET', 'POST'])
 @auth.requires_auth

@@ -127,8 +127,11 @@ def kegs():
     kegs = models.Keg.query.all()
     if kegs:
         return render_template('kegs.html',
-                kegs=sorted(models.Keg.query.all(), key=lambda x: x.beer.name,
+                kegs=kegs)
+        '''
+                kegs=sorted(kegs, key=lambda x: x.beer.name,
                     reverse=False))
+                    '''
     else:
         return render_template('kegs.html',
                 kegs=None)

@@ -1,5 +1,4 @@
 <html>
-
 	<head>
 		<script src="{{ url_for('static', filename='jquery-min.js') }}"></script>
 		<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
@@ -20,6 +19,7 @@
 			<a href="/beers" class="btn btn-default navbar-btn">Beers</a>
 			<a href="/vote" class="btn btn-default navbar-btn">Vote</a>
 		</nav>
+		This is 100% a beta/alpha, please check the <a href="https://github.west.isilon.com/bhanderson/beervintory">github</a> for issues/requests.
 		<hr>
 		<div class="flash">
 		{% with messages = get_flashed_messages() %}

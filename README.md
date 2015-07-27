@@ -14,3 +14,13 @@ To help the kegmeister:
 * Track beer consumption
 * Track CO2 status
 
+## How to install
+```
+git clone https://github.west.isilon.com/bhanderson/beervintory
+cd beervintory
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python db_create.py
+python run.py
+```

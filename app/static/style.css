@@ -83,4 +83,6 @@ table, th, td{
 	background-size: contain;
 	height: 100px;
 	padding-left: 75px;
+	text-decoration: none;
+	color: gray;
 }

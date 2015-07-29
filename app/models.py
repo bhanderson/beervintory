@@ -83,3 +83,14 @@ class Vote(db.Model):
     created = db.Column(db.Date)
     rating = db.Column(db.Integer)
     beer_id = db.Column(db.Integer, db.ForeignKey('beer.id'))
+
+class Request(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    created = db.Column(db.Date)
+    beer_name = db.Column(db.String(64))
+    user_ip = db.Column(db.Integer, db.ForeignKey('request_ip.id'))
+    votes = db.Column(db.Integer)
+
+class Request_ip(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String(128))

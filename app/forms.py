@@ -58,3 +58,8 @@ class VoteForm(Form):
     beer_id = SelectField('Beer', coerce=int)
     rating = IntegerField()
     submit = SubmitField()
+
+class RequestForm(Form):
+    """Form for making a request"""
+    beer_name = TextField('Beer Name')
+    submit = SubmitField()

@@ -1,7 +1,7 @@
 import datetime
 from flask import render_template, flash, request, redirect
 from app import app, db, models
-from .forms import BeerForm, KegForm, KegeratorForm, FloorForm, VoteForm
+from .forms import BeerForm, KegForm, KegeratorForm, FloorForm, VoteForm, RequestForm
 from . import auth
 
 
@@ -220,3 +220,37 @@ def vote():
     return render_template('vote.html',
             form=form,
             beers=beers)
+
+@app.route('/voting', methods=['GET', 'POST'])
+@app.route('/voting/<id>', methods=['GET','POST'])
+def voting(id = None):
+    form = RequestForm()
+    requests = models.Request.query.all()
+    if id:
+        beer = models.Request.query.filter(models.Request.beer_name==id).first()
+        if not beer:
+            pass
+        else:
+            #if request.remote_addr != beer.user_ip
+            beer.votes += 1
+            print(beer.user_ip)
+            db.session.commit()
+
+    elif form.validate_on_submit():
+        beers = models.Request.query.filter(models.Request.beer_name==form.beer_name.data).all()
+        if not beers:
+            # list is empty create it
+            beer = models.Request()
+            beer.beer_name = form.beer_name.data
+            beer.votes = 1
+            beer.created = datetime.date.today()
+            ip = models.Request_ip()
+            ip.ip = request.remote_addr
+            db.session.add(ip)
+            beer.user_ip = ip.id
+            db.session.add(beer)
+            db.session.commit()
+    return render_template('voting.html',
+            form=form,
+            requests=requests)
+

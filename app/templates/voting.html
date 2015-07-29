@@ -1,0 +1,16 @@
+{% import 'macros.html' as macros %}
+{% extends "base.html" %}
+{% block content %}
+<h1>Vote for upcoming beers!</h1>
+
+{{ macros.list_fields(form) }}
+<p>
+{% for request in requests %}
+{{request.votes}}|{{request.beer_name}}
+<form action="/voting/{{request.beer_name}}">
+	<input type="submit" value="Vote">
+</form>
+{% endfor %}
+</p>
+
+{% endblock %}

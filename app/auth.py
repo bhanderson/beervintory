@@ -12,7 +12,6 @@ def login(username):
     if is_logged_in():
         logout()
     session[USERNAME_KEY] = username
-    print session[USERNAME_KEY]
 
 def logout():
     session.pop(USERNAME_KEY, None)
@@ -83,7 +82,6 @@ def authenticate(username, password):
     # support multiple user stores
     methods = (check_builtin, check_ldap)
     for method in methods:
-        print username, password
         if method(username, password):
             # create a session for the user
             login(username)

@@ -1,15 +1,15 @@
 <html>
 	<head>
+		<link rel="rel" href="{{ url_for('static', filename='favicon.ico') }}">
 		<script src="{{ url_for('static', filename='jquery-min.js') }}"></script>
 		<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
-		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
-		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-		<title>🍺Beervintory</title>
-		<!-- <div class="header">Beervintory</div> -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<title>Beervintory</title>
 	</head>
 	<body>
 		<header>
-			Beervintory🍻
+			<a href="/" id="site-logo">Beervintory</a>
 		</header>
 		<nav class="navbar navbar-default">
 			<a href="/" class="btn btn-default navbar-btn">Home</a>

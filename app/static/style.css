@@ -1,4 +1,6 @@
 header {
+	width: 95%;
+	margin: 5px auto;
 	font-size:80;
 	color:gray;
 }
@@ -73,4 +75,14 @@ table, th, td{
 
 #beer-info {
 	display: none;
+}
+
+#site-logo {
+	background-image: url('/static/logo.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 100px;
+	padding-left: 75px;
+	text-decoration: none;
+	color: gray;
 }

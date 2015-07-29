@@ -1,9 +1,9 @@
 import datetime
 from flask import render_template, flash, request, redirect
 from app import app, db, models
-from .forms import BeerForm, KegForm, KegeratorForm, FloorForm, VoteForm
+from .forms import (BeerForm, KegForm, KegeratorForm, LoginForm,
+                    FloorForm, VoteForm)
 from . import auth
-
 
 
 @app.route('/')
@@ -13,6 +13,23 @@ def index():
     return render_template('index.html',
             floors=floors,
             kegerators=sorted(kegerators, key=lambda x: x.name, reverse=False))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    login_error = False
+    if form.validate_on_submit():
+        if auth.authenticate(form.username.data, form.password.data):
+            return redirect(request.args.get("return", "/"))
+        login_error = True
+    return render_template('login.html',
+            login_error = login_error,
+            form = form)
+
+@app.route('/logout')
+def logout():
+    auth.logout()
+    return redirect('/', code=302)
 
 @app.route('/floors')
 def floors():

@@ -1,11 +1,16 @@
 from flask.ext.wtf import Form
 from wtforms import (TextField, DecimalField, IntegerField, SelectField,
-SubmitField, DateField, BooleanField, SelectMultipleField)
+SubmitField, DateField, BooleanField, SelectMultipleField, PasswordField)
 from wtforms.fields import FormField
 from wtforms.validators import DataRequired, Optional
 from . import models
 
 from wtforms_alchemy import ModelForm, ModelFieldList
+
+class LoginForm(Form):
+    username = TextField('Username')
+    password = PasswordField('Password')
+    submit = SubmitField()
 
 class FloorForm(Form):
     '''Form for each floor containing kegerators.

@@ -2,7 +2,7 @@ import datetime
 from flask import render_template, flash, request, redirect
 from app import app, db, models
 from .forms import (BeerForm, KegForm, KegeratorForm, LoginForm,
-                    FloorForm, VoteForm)
+                    FloorForm, VoteForm, RequestForm)
 from . import auth
 
 
@@ -39,7 +39,7 @@ def floors():
                 reverse=False))
 
 @app.route('/floor/<id>', methods=['GET', 'POST'])
-@auth.requires_auth
+#@auth.requires_auth
 def floor(id):
     '''Views particular floor'''
     floor = models.Floor.query.get_or_404(id)
@@ -55,7 +55,7 @@ def floor(id):
             form = form)
 
 @app.route('/floor/add', methods=['GET', 'POST'])
-@auth.requires_auth
+#@auth.requires_auth
 def add_floor():
     '''Adds a floor'''
     # Create the form
@@ -81,7 +81,7 @@ def kegerators():
                 x.name, reverse=False))
 
 @app.route('/kegerator/<id>', methods=['GET', 'POST'])
-@auth.requires_auth
+#@auth.requires_auth
 def kegerator(id):
     '''Displays a certain kegerator'''
     kegerator = models.Kegerator.query.get_or_404(id)
@@ -101,7 +101,7 @@ def kegerator(id):
             form = form)
 
 @app.route('/kegerator/add', methods=['GET','POST'])
-@auth.requires_auth
+#@auth.requires_auth
 def add_kegerator():
     # Create the form
     form = KegeratorForm()
@@ -137,7 +137,7 @@ def kegs():
                 kegs=None)
 
 @app.route('/keg/<id>', methods=['GET', 'POST'])
-@auth.requires_auth
+#@auth.requires_auth
 def keg(id):
     '''Views particular keg'''
     keg = models.Keg.query.get_or_404(id)
@@ -157,7 +157,7 @@ def keg(id):
             keg=keg)
 
 @app.route('/keg/add', methods=['GET', 'POST'])
-@auth.requires_auth
+#@auth.requires_auth
 def add_keg():
     # Create the form
     form = KegForm()
@@ -185,7 +185,7 @@ def beers():
                 reverse=False))
 
 @app.route('/beer/<id>', methods=['GET', 'POST'])
-@auth.requires_auth
+#@auth.requires_auth
 def beer(id):
     '''Displays a certain beer or the pace to create a beer'''
     beer = models.Beer.query.get_or_404(id)
@@ -201,7 +201,7 @@ def beer(id):
             beer=beer)
 
 @app.route('/beer/add', methods=['GET', 'POST'])
-@auth.requires_auth
+#@auth.requires_auth
 def edit_beer():
     form = BeerForm()
     kegs = models.Keg.query.all()
@@ -217,6 +217,29 @@ def edit_beer():
     return render_template('beer_add.html',
             form=form)
 
+@app.route('/request', methods=['GET', 'POST'])
+@app.route('/request/<id>', methods=['GET', 'POST'])
+def request(id=None):
+    form = RequestForm()
+    if id:
+        print(id)
+        request = models.Request.query.filter(models.Request.name==id).first()
+        request.total += 1
+        db.session.commit()
+        return redirect("/request", 302)
+    if form.validate_on_submit():
+        new_request = models.Request()
+        new_request.name = form.name.data
+        new_request.created = datetime.date.today()
+        new_request.total = 0
+        db.session.add(new_request)
+        db.session.commit()
+    return render_template('request.html',
+            requests=sorted(models.Request.query.all(), key=lambda x:
+                x.total, reverse=True),
+            form=form)
+
+'''
 @app.route('/vote', methods=['GET', 'POST'])
 def vote():
     beers = models.Beer.query.all()
@@ -237,3 +260,4 @@ def vote():
     return render_template('vote.html',
             form=form,
             beers=beers)
+'''

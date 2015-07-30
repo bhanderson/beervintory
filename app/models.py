@@ -1,6 +1,7 @@
 from app import db
 
 class Floor(db.Model):
+    '''Floor table for holding kegerators'''
     id = db.Column(db.Integer, primary_key=True)
     kegerators = db.relationship("Kegerator", backref="floor")
     number = db.Column(db.Integer, unique=True)
@@ -17,6 +18,7 @@ class Floor(db.Model):
         return "None"
 
 class Kegerator(db.Model):
+    '''Kegerator table for holding kegs and kegerator info'''
     id = db.Column(db.Integer, primary_key=True)
     # Info
     co2 = db.Column(db.Boolean)
@@ -32,6 +34,8 @@ class Kegerator(db.Model):
         return '{0}'.format(self.name)
 
 class Keg(db.Model):
+    '''Keg table for holding beer and keg info, each time we get a new keg in
+    create a keg even if we have had the beer before'''
     id = db.Column(db.Integer, primary_key=True)
     # Relationships
     beer_id  = db.Column(db.Integer, db.ForeignKey('beer.id'))
@@ -61,6 +65,7 @@ class Keg(db.Model):
         return 'None | {0}, {1}'.format(full,cold)
 
 class Beer(db.Model):
+    '''Beer info! the score is calculated as an average of all scores'''
     id = db.Column(db.Integer, primary_key=True)
     # beer info
     abv = db.Column(db.Float(precision=4))
@@ -79,7 +84,15 @@ class Beer(db.Model):
         return "{0} {1} | {2}".format(self.name, self.style, self.brewer)
 
 class Vote(db.Model):
+    '''A vote for a beer rating'''
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.Date)
     rating = db.Column(db.Integer)
     beer_id = db.Column(db.Integer, db.ForeignKey('beer.id'))
+
+class Request(db.Model):
+    ''' A request for a beer'''
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    created = db.Column(db.Date)
+    total = db.Column(db.Integer)

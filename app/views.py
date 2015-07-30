@@ -229,11 +229,11 @@ def request_beer(id=None):
     form = RequestForm()
     if id:
         print(id)
-        request = models.Request.query.filter(models.Request.name==id).first()
-        request.total += 1
+        myrequest = models.Request.query.filter(models.Request.name==id).first()
+        myrequest.total += 1
         db.session.commit()
         return redirect("/request", 302)
-    if form.validate_on_submit():
+    elif form.validate_on_submit():
         new_request = models.Request()
         new_request.name = form.name.data
         new_request.created = datetime.date.today()

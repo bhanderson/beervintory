@@ -20,7 +20,7 @@ def check_builtin(username, password):
     """This function is called to check if a username /
     password combination is valid.
     """
-    builtins = {}
+    builtins = {"bryce":"a"}
     for key, val in builtins.iteritems():
         if key == username and val == password:
             return True

@@ -20,8 +20,8 @@
 		<td>{{request.total}}</td> 
 		<td>{{request.name}}</td>
 		<td>
-<a href="{{url_for('request', id=request.name)}}"><strong>Vote</strong></a>
-			</td>
+		<a href="{{url_for('request_beer', id=request.name)}}"><strong>Vote</strong></a>
+		</td>
 	</tr>
 {% endfor %}
 </table>

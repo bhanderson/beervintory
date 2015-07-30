@@ -225,7 +225,7 @@ def edit_beer():
 @app.route('/request', methods=['GET', 'POST'])
 @app.route('/request/<id>', methods=['GET', 'POST'])
 @auth.requires_auth
-def request(id=None):
+def request_beer(id=None):
     form = RequestForm()
     if id:
         print(id)

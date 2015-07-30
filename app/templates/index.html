@@ -8,6 +8,9 @@
 				{% if kegerator.floor == floor %}
 				<li><a href="{{ url_for('kegerator', id=kegerator.id)}}">{{ kegerator }}</a></li>
 					<ul>
+						{% if not kegerator.kegs %}
+							<li> Empty :( </li>
+						{%endif%}
 						{% for keg in kegerator.kegs %}
 							<li> <a href="{{ url_for('beer', id=keg.beer_id)}}">{{ keg.beer }}</a> </li>
 						{% endfor %}

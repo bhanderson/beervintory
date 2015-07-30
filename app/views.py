@@ -27,11 +27,13 @@ def login():
             form = form)
 
 @app.route('/logout')
+@auth.requires_auth
 def logout():
     auth.logout()
     return redirect('/', code=302)
 
 @app.route('/floors')
+@auth.requires_auth
 def floors():
     '''Views all floors'''
     return render_template('floors.html',
@@ -39,7 +41,7 @@ def floors():
                 reverse=False))
 
 @app.route('/floor/<id>', methods=['GET', 'POST'])
-#@auth.requires_auth
+@auth.requires_auth
 def floor(id):
     '''Views particular floor'''
     floor = models.Floor.query.get_or_404(id)
@@ -55,7 +57,7 @@ def floor(id):
             form = form)
 
 @app.route('/floor/add', methods=['GET', 'POST'])
-#@auth.requires_auth
+@auth.requires_auth
 def add_floor():
     '''Adds a floor'''
     # Create the form
@@ -74,6 +76,7 @@ def add_floor():
             form=form)
 
 @app.route('/kegerators')
+@auth.requires_auth
 def kegerators():
     '''Displays all kegerators'''
     return render_template('kegerators.html',
@@ -81,7 +84,7 @@ def kegerators():
                 x.name, reverse=False))
 
 @app.route('/kegerator/<id>', methods=['GET', 'POST'])
-#@auth.requires_auth
+@auth.requires_auth
 def kegerator(id):
     '''Displays a certain kegerator'''
     kegerator = models.Kegerator.query.get_or_404(id)
@@ -101,7 +104,7 @@ def kegerator(id):
             form = form)
 
 @app.route('/kegerator/add', methods=['GET','POST'])
-#@auth.requires_auth
+@auth.requires_auth
 def add_kegerator():
     # Create the form
     form = KegeratorForm()
@@ -122,6 +125,7 @@ def add_kegerator():
             form=form)
 
 @app.route('/kegs')
+@auth.requires_auth
 def kegs():
     '''Displays all kegs'''
     kegs = models.Keg.query.all()
@@ -137,7 +141,7 @@ def kegs():
                 kegs=None)
 
 @app.route('/keg/<id>', methods=['GET', 'POST'])
-#@auth.requires_auth
+@auth.requires_auth
 def keg(id):
     '''Views particular keg'''
     keg = models.Keg.query.get_or_404(id)
@@ -157,7 +161,7 @@ def keg(id):
             keg=keg)
 
 @app.route('/keg/add', methods=['GET', 'POST'])
-#@auth.requires_auth
+@auth.requires_auth
 def add_keg():
     # Create the form
     form = KegForm()
@@ -178,6 +182,7 @@ def add_keg():
             form=form)
 
 @app.route('/beers')
+@auth.requires_auth
 def beers():
     '''Displays all beers'''
     return render_template('beers.html',
@@ -185,7 +190,7 @@ def beers():
                 reverse=False))
 
 @app.route('/beer/<id>', methods=['GET', 'POST'])
-#@auth.requires_auth
+@auth.requires_auth
 def beer(id):
     '''Displays a certain beer or the pace to create a beer'''
     beer = models.Beer.query.get_or_404(id)
@@ -201,7 +206,7 @@ def beer(id):
             beer=beer)
 
 @app.route('/beer/add', methods=['GET', 'POST'])
-#@auth.requires_auth
+@auth.requires_auth
 def edit_beer():
     form = BeerForm()
     kegs = models.Keg.query.all()
@@ -219,6 +224,7 @@ def edit_beer():
 
 @app.route('/request', methods=['GET', 'POST'])
 @app.route('/request/<id>', methods=['GET', 'POST'])
+@auth.requires_auth
 def request(id=None):
     form = RequestForm()
     if id:

@@ -65,5 +65,5 @@ class VoteForm(Form):
     submit = SubmitField()
 
 class RequestForm(Form):
-    name = TextField('Name')
+    name = TextField('Name', validators=[DataRequired()])
     submit = SubmitField()

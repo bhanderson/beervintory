@@ -58,6 +58,7 @@ def floor(id):
 
 @app.route('/floor/add', methods=['GET', 'POST'])
 @auth.requires_auth
+@auth.requires_admin
 def add_floor():
     '''Adds a floor'''
     # Create the form
@@ -105,6 +106,7 @@ def kegerator(id):
 
 @app.route('/kegerator/add', methods=['GET','POST'])
 @auth.requires_auth
+@auth.requires_admin
 def add_kegerator():
     # Create the form
     form = KegeratorForm()
@@ -162,6 +164,7 @@ def keg(id):
 
 @app.route('/keg/add', methods=['GET', 'POST'])
 @auth.requires_auth
+@auth.requires_admin
 def add_keg():
     # Create the form
     form = KegForm()
@@ -207,6 +210,7 @@ def beer(id):
 
 @app.route('/beer/add', methods=['GET', 'POST'])
 @auth.requires_auth
+@auth.requires_admin
 def edit_beer():
     form = BeerForm()
     kegs = models.Keg.query.all()
@@ -227,11 +231,11 @@ def edit_beer():
 @auth.requires_auth
 def request_beer(id=None):
     form = RequestForm()
-    if id:
-        print(id)
+    if id and not auth.has_voted():
         myrequest = models.Request.query.filter(models.Request.name==id).first()
         myrequest.total += 1
         db.session.commit()
+        auth.vote()
         return redirect("/request", 302)
     elif form.validate_on_submit():
         new_request = models.Request()

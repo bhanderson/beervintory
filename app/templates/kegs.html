@@ -3,7 +3,9 @@
 
 <div class="list">
 	<ul>
+{% if admin %}
 		<li><a href="{{url_for('keg', id='add')}}"><strong>Add Keg</strong></li>
+		{% endif %}
 	</ul>
 	{% if kegs %}
 		{% for keg in kegs %}

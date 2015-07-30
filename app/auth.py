@@ -1,17 +1,40 @@
 from functools import wraps
 from flask import make_response, redirect, request, session
+from app import app
 import ldap
 
 
 USERNAME_KEY = "username"
 
+admin = ['bhanderson']
+
+def has_voted():
+    return session[USERNAME_KEY]['voted']
+
+def vote():
+    session[USERNAME_KEY]['voted'] = True
+
 def is_logged_in():
     return USERNAME_KEY in session
+
+def get_username():
+    if is_logged_in():
+        return session[USERNAME_KEY]['username']
+    return 'Anonymous'
+
+def is_admin(username = None):
+    if not username:
+        if not is_logged_in():
+            return False
+        username = session[USERNAME_KEY]['username']
+    return username in admin
 
 def login(username):
     if is_logged_in():
         logout()
-    session[USERNAME_KEY] = username
+    session[USERNAME_KEY] = {'username': username,
+            'voted': False,
+            'admin': is_admin(username)}
 
 def logout():
     session.pop(USERNAME_KEY, None)
@@ -20,7 +43,7 @@ def check_builtin(username, password):
     """This function is called to check if a username /
     password combination is valid.
     """
-    builtins = {"bryce":"a"}
+    builtins = {"test":"a"}
     for key, val in builtins.iteritems():
         if key == username and val == password:
             return True
@@ -105,6 +128,15 @@ def requires_auth(f):
                 ret=request.path), code=302)
     return decorated
 
+def requires_admin(f):
+    """decerator for requiring auth to a function"""
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if is_admin():
+            return f(*args, **kwargs)
+        return redirect("/", 302)
+    return decorated
+
 def requires_basic_auth(f):
     """decerator for requiring http basic auth to a function"""
     @wraps(f)
@@ -122,3 +154,8 @@ def requires_basic_auth(f):
         # otherwise send 401
         return send_401_response()
     return decorated
+
+@app.context_processor
+def inject_admin():
+    return dict(admin=is_admin(), logged_in=is_logged_in(),
+            username=get_username())

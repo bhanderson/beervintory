@@ -2,9 +2,11 @@
 {% block content %}
 
 <div class="list">
+	{% if admin %}
 	<ul>
 		<li><a href="{{url_for('floor', id='add')}}"><strong>Add Floor</strong></a></li>
 	</ul>
+	{% endif %}
 	{% if floors %}
 		{% for floor in floors %}
 		<ul>

@@ -2,7 +2,9 @@
 {% block content %}
 	<div class="list">
 		<ul>
+{% if admin %}
 			<li><a href="{{url_for('beer', id='add')}}"><strong>Add Beer</strong></a></li>
+			{% endif %}
 		</ul>
 		{% if beers %}
 			{% for beer in beers %}

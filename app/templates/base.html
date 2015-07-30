@@ -6,9 +6,6 @@
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 		<title>Beervintory</title>
-		<div align="right">
-			<a href="/logout" class="btn btn-default navbar-btn">Logout</a>
-		  </div>
 	</head>
 	<body>
 		<header>
@@ -21,6 +18,11 @@
 			<a href="/kegs" class="btn btn-default navbar-btn">Kegs</a>
 			<a href="/beers" class="btn btn-default navbar-btn">Beers</a>
 			<a href="/request" class="btn btn-default navbar-btn">Request</a>
+			{% if logged_in %}
+				<a align="right" href="/logout" class="btn btn-default navbar-btn">Logout</a>
+			{% else %}
+				<a align="right" href="/login" class="btn btn-default navbar-btn">Login</a>
+			{% endif %}
 		</nav>
 		This is 100% a beta/alpha, please check the <a href="https://github.west.isilon.com/bhanderson/beervintory">github</a> for issues/requests.
 		<hr>

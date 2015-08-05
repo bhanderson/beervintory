@@ -15,12 +15,14 @@
 			{% endif %}<!-- end if stocked -->
 		{% endfor %}<!-- end for beer in beers -->
 		{% for beer in beers %}
-			{% if beer.kegs and not beer.kegs[0].stocked %}
-				<p>Out of stock:</p>
-				<ul>
-					<li><a href="{{url_for('beer', id=beer.id)}}">{{beer}}</a></li>
-				</ul>
-			{% endif %}<!-- end if not stocked -->
+			{% if beer.kegs %}
+				{% if not beer.kegs[0].stocked %}
+					<p>Out of stock:</p>
+					<ul>
+						<li><a href="{{url_for('beer', id=beer.id)}}">{{beer}}</a></li>
+					</ul>
+				{% endif %}<!-- end if not stocked -->
+			{% endif %}<!-- end if beer.kegs -->
 		{% endfor %}<!-- end for beer in beers -->
 	{% endif %}<!-- end if beers -->
 </div>

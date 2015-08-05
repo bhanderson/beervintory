@@ -15,7 +15,7 @@ class LoginForm(Form):
 class FloorForm(Form):
     '''Form for each floor containing kegerators.
     A floor can have many kegerators'''
-    kegerators = SelectMultipleField('Kegerators', validators=[Optional()])
+    #kegerators = SelectMultipleField('Kegerators', validators=[Optional()])
     number = IntegerField('Floor Number')
     submit = SubmitField()
 
@@ -26,7 +26,7 @@ class KegeratorForm(Form):
     co2 = BooleanField('CO2')
     co2_date = DateField('CO2 Date')
     floor_id = SelectField('Floor', coerce=int, validators=[Optional()])
-    kegs = SelectMultipleField('Kegs', coerce = int, validators=[Optional()])
+    #kegs = SelectMultipleField('Kegs', coerce = int, validators=[Optional()])
     name = TextField('Name')
     submit = SubmitField()
 
@@ -52,7 +52,7 @@ class BeerForm(Form):
     ba_score = IntegerField('Beer Advocate Score:', validators=[Optional()])
     brewer = TextField('Brewer')
     isi_score = IntegerField('Isilon Score', validators=[Optional()])
-    kegs = SelectMultipleField('Kegerators', coerce = int, validators=[Optional()])
+    #kegs = SelectMultipleField('Kegerators', coerce = int, validators=[Optional()])
     link = TextField('Beer Advocate Link')
     name = TextField('Name')
     style = TextField('Style')

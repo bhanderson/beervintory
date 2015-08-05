@@ -45,8 +45,8 @@ def floor(id):
     floor = models.Floor.query.get_or_404(id)
     form = FloorForm(obj=floor)
     kegerators = models.Kegerator.query.all()
-    form.kegerators.choices = [(k.id, k.__repr__()) for k in kegerators]
-    form.kegerators.choices.insert(0, (0, ''))
+    #form.kegerators.choices = [(k.id, k.__repr__()) for k in kegerators]
+    #form.kegerators.choices.insert(0, (0, ''))
     if form.validate_on_submit():
         form.populate_obj(floor)
         db.session.commit()
@@ -62,8 +62,8 @@ def add_floor():
     # Create the form
     form = FloorForm()
     kegerators = models.Kegerator.query.all()
-    form.kegerators.choices = [(k, k.__repr__()) for k in kegerators]
-    form.kegerators.choices.insert(0, (0, ''))
+    #form.kegerators.choices = [(k, k.__repr__()) for k in kegerators]
+    #form.kegerators.choices.insert(0, (0, ''))
     # Create the floor
     new_floor = models.Floor()
     if form.validate_on_submit():
@@ -88,8 +88,8 @@ def kegerator(id):
     form = KegeratorForm(obj=kegerator)
     floors = models.Floor.query.all()
     kegs = models.Keg.query.all()
-    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
-    form.kegs.choices.insert(0, (0, ''))
+    #form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    #form.kegs.choices.insert(0, (0, ''))
     form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
     form.floor_id.choices.insert(0, (0, ''))
     # Update model
@@ -110,8 +110,8 @@ def add_kegerator():
     form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
     form.floor_id.choices.insert(0, (0, ''))
     kegs = models.Keg.query.all()
-    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
-    form.kegs.choices.insert(0, (0, ''))
+    #form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    #form.kegs.choices.insert(0, (0, ''))
     # Create the kegerator
     new_kegerator = models.Kegerator()
     if form.validate_on_submit():
@@ -191,8 +191,8 @@ def beer(id):
     beer = models.Beer.query.get_or_404(id)
     form = BeerForm(obj=beer)
     kegs = models.Keg.query.all()
-    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
-    form.kegs.choices.insert(0, (0, ''))
+    #form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    #form.kegs.choices.insert(0, (0, ''))
     if form.validate_on_submit():
         form.populate_obj(beer)
         db.session.commit()
@@ -206,8 +206,8 @@ def beer(id):
 def edit_beer():
     form = BeerForm()
     kegs = models.Keg.query.all()
-    form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
-    form.kegs.choices.insert(0, (0, ''))
+    #form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
+    #form.kegs.choices.insert(0, (0, ''))
     # create the beer
     new_beer = models.Beer()
     if form.validate_on_submit():

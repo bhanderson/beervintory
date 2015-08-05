@@ -6,7 +6,7 @@ import ldap
 
 USERNAME_KEY = "username"
 
-admin = ['bhanderson']
+admin = ['bhanderson','wchristie','jwisman']
 
 def has_voted():
     return session[USERNAME_KEY]['voted']

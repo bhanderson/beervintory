@@ -11,7 +11,7 @@ def index():
     floors = models.Floor.query.all()
     kegerators = models.Kegerator.query.all()
     return render_template('index.html',
-            floors=floors,
+            floors=sorted(floors, key=lambda x: x.number, reverse=False),
             kegerators=sorted(kegerators, key=lambda x: x.name, reverse=False))
 
 @app.route('/login', methods=['GET', 'POST'])

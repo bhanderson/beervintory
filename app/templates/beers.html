@@ -15,7 +15,7 @@
 			{% endif %}<!-- end if stocked -->
 		{% endfor %}<!-- end for beer in beers -->
 		{% for beer in beers %}
-			{% if not beer.kegs[0].stocked %}
+			{% if beer.kegs and not beer.kegs[0].stocked %}
 				<p>Out of stock:</p>
 				<ul>
 					<li><a href="{{url_for('beer', id=beer.id)}}">{{beer}}</a></li>

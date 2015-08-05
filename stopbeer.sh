@@ -1,2 +1,2 @@
 #!/bin/sh
-pkill -F /var/www/beervintory/run.pid -TERM
+pkill -F /var/www/beervintory/run.pid

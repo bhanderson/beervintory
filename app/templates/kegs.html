@@ -3,17 +3,26 @@
 
 <div class="list">
 	<ul>
-{% if admin %}
-		<li><a href="{{url_for('keg', id='add')}}"><strong>Add Keg</strong></li>
+		{% if admin %}
+			<li><a href="{{url_for('keg', id='add')}}"><strong>Add Keg</strong></li>
 		{% endif %}
 	</ul>
 	{% if kegs %}
 		{% for keg in kegs %}
-		<ul>
-			<li><a href="{{url_for('keg', id=keg.id)}}">{{keg}}</li>
-		</ul>
-		{% endfor %}
-	{% endif %}
-</div>
+			{% if keg.stocked %}
+				<ul>
+					<li><a href="{{url_for('keg', id=keg.id)}}">{{keg}}</a></li>
+				</ul>
+			{% endif %}<!-- end if stocked -->
+		{% endfor %}<!-- end for keg in kegs -->
+		<p>Out of stock:</p>
+		{% for keg in kegs %}
+			{% if not keg.stocked %}
+				<ul>
+					<li><a href="{{url_for('keg', id=keg.id)}}">{{keg}}</a></li>
+				</ul>
+			{% endif %}<!-- end if not stocked -->
+		{% endfor %}<!-- end for keg in kegs -->
+	{% endif %}<!-- end if kegs -->
 </div>
 {% endblock %}

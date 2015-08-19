@@ -90,7 +90,8 @@ def kegerator(id):
     kegs = models.Keg.query.all()
     #form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
     #form.kegs.choices.insert(0, (0, ''))
-    form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
+    sorted_floors = sorted(floors, key=lambda x: x.number, reverse=False)
+    form.floor_id.choices = [(f.id, f.__repr__()) for f in sorted_floors]
     form.floor_id.choices.insert(0, (0, ''))
     # Update model
     if form.validate_on_submit():
@@ -107,7 +108,8 @@ def add_kegerator():
     # Create the form
     form = KegeratorForm()
     floors = models.Floor.query.all()
-    form.floor_id.choices = [(f.id, f.__repr__()) for f in floors]
+    sorted_floors = sorted(floors, key=lambda x: x.number, reverse=False)
+    form.floor_id.choices = [(f.id, f.__repr__()) for f in sorted_floors]
     form.floor_id.choices.insert(0, (0, ''))
     kegs = models.Keg.query.all()
     #form.kegs.choices = [(k.id, k.__repr__()) for k in kegs]
@@ -143,10 +145,12 @@ def keg(id):
     keg = models.Keg.query.get_or_404(id)
     form = KegForm(obj=keg)
     beers = models.Beer.query.all()
-    kegerators = models.Kegerator.query.all()
-    form.beer_id.choices = [(b.id, b.__repr__()) for b in beers]
+    sorted_beers = sorted(beers, key=lambda x: x.name, reverse=False)
+    form.beer_id.choices = [(b.id, b.__repr__()) for b in sorted_beers]
     form.beer_id.choices.insert(0, (0, ''))
-    form.kegerator_id.choices = [(k.id, k.__repr__()) for k in kegerators]
+    kegerators = models.Kegerator.query.all()
+    sorted_kegerators = sorted(kegerators, key=lambda x: x.name, reverse=False)
+    form.kegerator_id.choices = [(k.id, k.__repr__()) for k in sorted_kegerators]
     form.kegerator_id.choices.insert(0, (0, ''))
     # Update model
     if form.validate_on_submit():
@@ -163,10 +167,12 @@ def add_keg():
     # Create the form
     form = KegForm()
     beers = models.Beer.query.all()
-    form.beer_id.choices = [(b.id, b.__repr__()) for b in beers]
+    sorted_beers = sorted(beers, key=lambda x: x.name, reverse=False)
+    form.beer_id.choices = [(b.id, b.__repr__()) for b in sorted_beers]
     form.beer_id.choices.insert(0, (0, ''))
     kegerators = models.Kegerator.query.all()
-    form.kegerator_id.choices = [(k.id, k.__repr__()) for k in kegerators]
+    sorted_kegerators = sorted(kegerators, key=lambda x: x.name, reverse=False)
+    form.kegerator_id.choices = [(k.id, k.__repr__()) for k in sorted_kegerators]
     form.kegerator_id.choices.insert(0, (0, ''))
     # Create the keg
     new_keg = models.Keg()

@@ -5,19 +5,14 @@ header {
 	color:gray;
 }
 
+#nav {
+    border-radius: 0;
+}
+
 .flash {
 	background: yellow;
 }
 
-ul.nav {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-li.nav {
-	display: inline;
-}
 
 .fields {
 	background: #eeeeee;

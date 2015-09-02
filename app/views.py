@@ -10,7 +10,7 @@ from . import auth
 def index():
     floors = models.Floor.query.all()
     kegerators = models.Kegerator.query.all()
-    if request.headers.get('Content-type') == 'application/json':
+    if request.headers.get('Content-Type') == 'application/json':
         data = {'floors': floors, 'kegerators': kegerators}
         return Response(data, mimetype='application/json')
     return render_template('index.html',

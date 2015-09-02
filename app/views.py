@@ -4,6 +4,7 @@ from app import app, db, models
 from .forms import (BeerForm, KegForm, KegeratorForm, LoginForm,
                     FloorForm, VoteForm, RequestForm)
 from . import auth
+import json
 
 
 @app.route('/')
@@ -11,7 +12,7 @@ def index():
     floors = models.Floor.query.all()
     kegerators = models.Kegerator.query.all()
     if request.headers.get('Content-Type') == 'application/json':
-        data = {'floors': floors, 'kegerators': kegerators}
+        data = json.dumps({'floors': list(floors), 'kegerators': list(kegerators)})
         return Response(data, mimetype='application/json')
     return render_template('index.html',
             floors=sorted(floors, key=lambda x: x.number, reverse=False),

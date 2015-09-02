@@ -12,7 +12,7 @@ def index():
     floors = models.Floor.query.all()
     kegerators = models.Kegerator.query.all()
     if request.headers.get('Content-Type') == 'application/json':
-        data = json.dumps({'floors': list(floors), 'kegerators': list(kegerators)})
+        data = json.dumps(list(floors))
         return Response(data, mimetype='application/json')
     return render_template('index.html',
             floors=sorted(floors, key=lambda x: x.number, reverse=False),

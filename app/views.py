@@ -11,12 +11,25 @@ import json
 def index():
     floors = models.Floor.query.all()
     kegerators = models.Kegerator.query.all()
-    if request.headers.get('Content-Type') == 'application/json':
-        data = json.dumps(list(floors))
-        return Response(data, mimetype='application/json')
     return render_template('index.html',
             floors=sorted(floors, key=lambda x: x.number, reverse=False),
             kegerators=sorted(kegerators, key=lambda x: x.name, reverse=False))
+
+@app.route('/api', methods=['GET'])
+def api():
+    floors = models.Floor.query.all()
+    kegerators = models.Kegerator.query.all()
+    kegs = models.Keg.query.all()
+    beer = models.Beer.query.all()
+    data = {}
+    for floor in floors:
+        data[str(floor)] = {}
+        for keger in floor.kegerators:
+            data[str(floor)][str(keger)] = []
+            for keg in keger.kegs:
+                if keg.tapped:
+                    data[str(floor)][str(keger)].append(str(keg))
+    return json.dumps(data)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

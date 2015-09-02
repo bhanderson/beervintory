@@ -1,5 +1,5 @@
 import datetime
-from flask import render_template, flash, request, redirect
+from flask import render_template, flash, request, redirect, Response
 from app import app, db, models
 from .forms import (BeerForm, KegForm, KegeratorForm, LoginForm,
                     FloorForm, VoteForm, RequestForm)
@@ -10,6 +10,9 @@ from . import auth
 def index():
     floors = models.Floor.query.all()
     kegerators = models.Kegerator.query.all()
+    if request.headers.get('Content-Type') == 'application/json':
+        data = {'floors': floors, 'kegerators': kegerators}
+        return Response(data, mimetype='application/json')
     return render_template('index.html',
             floors=sorted(floors, key=lambda x: x.number, reverse=False),
             kegerators=sorted(kegerators, key=lambda x: x.name, reverse=False))

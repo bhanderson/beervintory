@@ -172,7 +172,8 @@ def keg(id):
         db.session.commit()
     return render_template('keg.html',
             form=form,
-            keg=keg)
+            keg=keg,
+            beer=keg.beer)
 
 @app.route('/keg/add', methods=['GET', 'POST'])
 @auth.requires_auth

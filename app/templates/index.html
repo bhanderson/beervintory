@@ -13,7 +13,7 @@
 							<li> Empty :( </li>
 						{%endif%}
 						{% for keg in kegerator.kegs %}
-							<li> <a href="{{ url_for('beer', id=keg.beer_id)}}">{{ keg }}</a> </li>
+							<li> <a href="{{ url_for('keg', id=keg.beer_id)}}">{{ keg }}</a> </li>
 						{% endfor %}
 					</ul>
 				{% endif %}

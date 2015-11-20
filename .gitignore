@@ -5,3 +5,4 @@ venv/
 env/
 db_repository/
 *.swp
+*.sqlite3

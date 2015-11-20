@@ -1,0 +1,9 @@
+{% for floor in Floors %}
+	{{floor}}<br>
+	{% for kegerator in floor.kegerator_set.iterator %}
+		{{kegerator}}<br>
+		{%for keg in kegerator.keg_set.iterator %}
+			{{keg}}
+		{% endfor %}
+	{% endfor %}
+{% endfor %}

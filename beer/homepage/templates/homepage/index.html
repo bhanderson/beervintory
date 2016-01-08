@@ -1,9 +1,64 @@
+<html>
+<head>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+    border-right:1px solid #bbb;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+</style>
+</head>
+<body>
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="floors">Floors</a></li>
+  <li><a href="kegerators">Kegerators</a></li>
+  <li><a href="kegs">Kegs</a></li>
+  <li><a href="beers">Beers</a></li>
+  <li><a href="rate">Rate</a></li>
+  <li><a href="vote">Vote</a></li>
+  <ul style="float:right;list-style-type:none;">
+    <li><a href="about">About</a></li>
+    <li><a href="admin">Login</a></li>
+  </ul>
+</ul>
+
+</body>
 {% for floor in Floors %}
 	{{floor}}<br>
 	{% for kegerator in floor.kegerator_set.iterator %}
 		{{kegerator}}<br>
 		{%for keg in kegerator.keg_set.iterator %}
-			{{keg}}
+			{{keg}}<br>
 		{% endfor %}
 	{% endfor %}
 {% endfor %}
+</html>

@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'inventory',
+    'homepage',
+    'request',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,7 +58,10 @@ ROOT_URLCONF = 'beervintory.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'homepage/templates',
+            'beervintory/templates',
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

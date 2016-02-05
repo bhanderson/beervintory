@@ -1,9 +1,17 @@
-{% for floor in Floors %}
-	{{floor}}<br>
-	{% for kegerator in floor.kegerator_set.iterator %}
-		{{kegerator}}<br>
-		{%for keg in kegerator.keg_set.iterator %}
-			{{keg}}
-		{% endfor %}
-	{% endfor %}
-{% endfor %}
+{% extends 'homepage/base.html' %}
+<html>
+	<h1>Isilon Beer Website</h1>
+	<ul>
+	{% for floor in Floors %}
+	<li>{{floor}}</li>
+		<ul>
+		{% for kegerator in floor.kegerator_set.iterator %}
+		<li>{{kegerator}}</li>
+			<ul>
+			{%for keg in kegerator.keg_set.iterator %}
+			<li>{{keg}}</li>
+			{% endfor %}</ul>
+		{% endfor %}</ul>
+	{% endfor %}</ul>
+	</body>
+</html>

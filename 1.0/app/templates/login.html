@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-    {% if login_error %}
-    <div class="alert alert-danger" role="alert">Login failed!</div>
-    {% endif %}
-    {% import 'macros.html' as macros %}
-    {{ macros.list_fields(form) }}
-</div>
-{% endblock %}

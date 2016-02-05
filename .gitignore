@@ -1,8 +1,2 @@
-*.pid
 venv/
 *.pyc
-*.db
-env/
-db_repository/
-*.swp
-*.sqlite3

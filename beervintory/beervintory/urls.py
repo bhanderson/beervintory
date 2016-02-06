@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^beer', include('inventory.urls')),
     url(r'^rate', include('rate.urls')),
     url(r'^request', include('request.urls')),
+    url(r'^api', include('api.urls')),
 ]

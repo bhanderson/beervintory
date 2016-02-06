@@ -8,16 +8,16 @@
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     </head>
     <body>
-    <div class="page-header">
-        <h1><a href="/">Beervintory</a></h1>
-    </div>
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="/">Home</a></li>
-      <li><a href="/beer">Beers</a></li>
-      <li><a href="/requests">Request</a></li>
-      <li><a href="/Vote">Vote</a></li>
-    </ul>
-    {% block content %}
-    {% endblock %}
-</body>
+        <div class="page-header">
+            <h1><a href="/">Beervintory</a></h1>
+        </div>
+        <ul class="nav nav-tabs">
+            <li><a href="/">Home</a></li>
+            <li><a href="/beer">Beers</a></li>
+            <li><a href="/request">Request</a></li>
+            <li><a href="/rate">Rate</a></li>
+        </ul>
+        {% block content %}
+        {% endblock %}
+    </body>
 </html>

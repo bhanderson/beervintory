@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'inventory',
     'homepage',
     'request',
+    'rate',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

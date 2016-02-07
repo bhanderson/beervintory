@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'inventory',
-    'homepage',
+    'website',
     'request',
     'rate',
     'api',
@@ -61,7 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'homepage/templates',
+            'website/templates',
             'beervintory/templates',
             ],
         'APP_DIRS': True,

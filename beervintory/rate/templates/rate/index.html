@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <table class="table">
+        {% for beer in Ratings %}
+        <tr>
+            <td>{{beer.0}}</td>
+            <td>{{beer.1}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

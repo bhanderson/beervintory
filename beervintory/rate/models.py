@@ -7,4 +7,7 @@ from inventory.models import Beer
 class Rate(models.Model):
     rating = models.SmallIntegerField() # this will be modded by 100
     beer = models.ForeignKey(Beer)
-
+    def __str__(self):
+        if self.rating and self.beer:
+            return "{0}: {1}".format(str(self.beer),self.rating)
+        return self

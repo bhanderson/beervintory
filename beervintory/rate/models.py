@@ -5,10 +5,10 @@ from inventory.models import Beer
 
 # Create your models here.
 class Rate(models.Model):
-    rating = models.SmallIntegerField()#editable=False) # this will be modded by 100
+    rating = models.SmallIntegerField(editable=False) # this will be modded by 100
     #beer = models.ForeignKey(Beer, unique=True)
-    beer = models.OneToOneField(Beer)
-    raters = models.TextField()#editable=False) # json dict of ip : rating
+    beer = models.OneToOneField(Beer, editable=False)
+    raters = models.TextField(editable=False) # json dict of ip : rating
     def __str__(self):
         return "{0}: {1}".format(str(self.beer), str(self.rating))
         return self

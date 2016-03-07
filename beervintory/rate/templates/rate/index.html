@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-    <table class="table">
-        {% for beer in Ratings %}
-        <tr>
-            <td>{{beer.0}}</td>
-            <td>{{beer.1}}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+<ul>
+{% for rate in Ratings %}
+<li>{{ rate }}</li>
+{% endfor %}
+</ul>
+<form method="post">
+    {% csrf_token %}
+    {{ beer }}
+    <br>
+    {{ rate }}
+    <input type="submit" value="Submit"></input>
+</form>
 {% endblock %}

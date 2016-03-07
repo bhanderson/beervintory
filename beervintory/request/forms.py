@@ -1,5 +1,4 @@
 from django import forms
-from inventory import models
 import models
 
 class RequestForm(forms.Form):

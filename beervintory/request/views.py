@@ -1,7 +1,7 @@
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
-from request import models
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from .forms import RequestForm, NewRequestForm
+from request import models
 import json
 
 # Create your views here.
@@ -18,19 +18,28 @@ def index(request):
             except IntegrityError:
                 return HttpResponse("Sorry that request already exists")
         elif 'request' in request.POST.keys():
-            req = models.Request.objects.get(id=request.POST['request'])
+            req = None
+            l = []
+            try:
+                req = models.Request.objects.get(id=request.POST['request'])
+            except ValueError:
+                return HttpResponseRedirect('request')
+            # if we have the request start the addition
             if req:
                 jd = json.decoder.JSONDecoder()
                 l = jd.decode(req.requesters)
                 if ip in l:
                     return HttpResponse("Sorry your IP already voted for this request")
                 req.number+=1
-                reqer = models.Requester()
-                reqer.request = req
-                reqer.ip = ip
-                req.save()
-                reqer.save()
+                l.append(ip)
+                req.requesters = json.dumps(l)
+                try:
+                    req.save()
+                except IntegrityError:
+                    return HttpResponse("Error")
+        # if we get a different post
         return HttpResponseRedirect('request')
+    # if we are displaying the website create the forms and send the requests
     form = RequestForm()
     newform = NewRequestForm()
     return render(request, 'request/index.html',

@@ -6,7 +6,12 @@
 <br>
 <form method="post">
     {% csrf_token %}
-    {{ form }}
+    {{ form }}<br>
+    <input type="submit" value="Submit"></input>
+</form>
+<form method="post">
+    {% csrf_token %}
+    {{ newform }}<br>
     <input type="submit" value="Submit"></input>
 </form>
 {% endblock %}

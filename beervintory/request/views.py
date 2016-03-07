@@ -1,55 +1,38 @@
-from django.shortcuts import render, HttpResponseRedirect
-from inventory import models as inv
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.db import IntegrityError
 from request import models
 from .forms import RequestForm, NewRequestForm
+import json
 
 # Create your views here.
 def index(request):
+    ip = request.META.get('REMOTE_ADDR')
     if request.method == "POST":
         if 'new_request' in request.POST:
-            new = models.Request()
-            new.beer = request.POST['new_request']
-            new.number = 0
-            new.save()
-        elif 'request' in request.POST.keys():
-            req = models.Request.objects.filter(
-                    beer=request.POST['request'])[0]
-            req.number+=1
-            req.save()
-        return HttpResponseRedirect('request')
-    else:
-        form = RequestForm()
-        newform = NewRequestForm()
-    return render(request, 'request/index.html',
-            {'form': form, 'newform': newform,
-        'Requests':models.Request.objects.all()})
-
-
-"""
-        newform = NewRequestForm(request.POST)
-        form = RequestForm(request.POST)
-        if newform.is_valid:
-            print request.POST
-            if request.POST.has_key('new_request') and request.POST['new_request']:
-                new = models.Request()
-                new.beer = request.POST['new_request'][0]
-                new.number = 0
-                new.save()
-            else:
-                return HttpResponseRedirect('request')
-        if form.is_valid:
-            # if we have a valid answer, ie. not new
-            if request.POST.has_key('request') and request.POST['request']:
-                req = models.Request.objects.filter(
-                        beer=request.POST['request'])[0]
-                req.number+=1
+            req = models.Request()
+            req.beer = request.POST['new_request']
+            req.number = 1
+            req.requesters = json.dumps([ip])
+            try:
                 req.save()
-            else:
-                return HttpResponseRedirect('request')
-    else:
-        form = RequestForm()
-        newform = NewRequestForm()
+            except IntegrityError:
+                return HttpResponse("Sorry that request already exists")
+        elif 'request' in request.POST.keys():
+            req = models.Request.objects.get(id=request.POST['request'])
+            if req:
+                jd = json.decoder.JSONDecoder()
+                l = jd.decode(req.requesters)
+                if ip in l:
+                    return HttpResponse("Sorry your IP already voted for this request")
+                req.number+=1
+                reqer = models.Requester()
+                reqer.request = req
+                reqer.ip = ip
+                req.save()
+                reqer.save()
+        return HttpResponseRedirect('request')
+    form = RequestForm()
+    newform = NewRequestForm()
     return render(request, 'request/index.html',
             {'form': form, 'newform': newform,
-        'Requests':models.Request.objects.all()})
-        """
+                'Requests':models.Request.objects.all()})

@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     </head>
     <body>
         <div class="page-header">
@@ -18,7 +17,8 @@
             <li><a href="/rate">Rate</a></li>
         </ul>
         <br>
-        {% block content %}
-        {% endblock %}
+        <link rel="stylesheet" href="styles.css">
+            {% block content %}
+            {% endblock %}
     </body>
 </html>

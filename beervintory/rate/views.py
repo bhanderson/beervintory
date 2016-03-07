@@ -9,6 +9,6 @@ def index(request):
         rates = []
         for select in selection:
             rates.append(select.rating)
-        context['Ratings'].append((str(select.beer),
-            sum(rates) / float(len(rates))))
+            context['Ratings'].append((str(select.beer),
+                sum(rates) / float(len(rates))))
     return render(request, 'rate/index.html', context)

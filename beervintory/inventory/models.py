@@ -21,7 +21,7 @@ class Kegerator(models.Model):
     co2_date = models.DateField(default=timezone.now)
     clean_date = models.DateField(default=timezone.now)
     floor = models.ForeignKey(Floor, blank=True, null=True)
-    name = models.CharField(max_length=50, default="Name", unique=True)
+    name = models.CharField(max_length=50, default="Kegerator", unique=True)
     def __str__(self):
         if self.name:
             return str(self.name)
@@ -45,7 +45,6 @@ class Brewer(models.Model):
 class Beer(models.Model):
     abv = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
     ba_score = models.SmallIntegerField()
-    isi_score = models.SmallIntegerField()
     link = models.CharField(max_length=100, default="Link to Beer")
     brewer = models.ForeignKey(Brewer)
     name = models.CharField(max_length=50, default="Name", unique=True)

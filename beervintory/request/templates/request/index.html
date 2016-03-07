@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+<ul>
 {% for request in Requests %}
-    {{request}}<br>
+    <li>{{request}}</li>
 {% endfor %}
+</ul>
 <br>
 <form method="post">
     {% csrf_token %}

@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+<ul>
 {% for floor in Floors %}
-	{{floor}}<br>
+    <li>{{floor}}</li>
+    <ul>
 	{% for kegerator in floor.kegerator_set.iterator %}
-		{{kegerator}}<br>
+        <li>{{kegerator}}</li>
+        <ul>
 		{%for keg in kegerator.keg_set.iterator %}
-			{{keg}}<br>
+            <li>{{keg}}</li>
 		{% endfor %}
+        </ul>
 	{% endfor %}
+    </ul>
 {% endfor %}
+</ul>
 {% endblock %}

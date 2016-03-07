@@ -11,3 +11,7 @@ class Rate(models.Model):
         if self.rating and self.beer:
             return "{0}: {1}".format(str(self.beer),self.rating)
         return self
+
+class Raters(models.Model):
+    rate = models.ForeignKey(Rate)
+    ip = models.CharField(unique=True, max_length=128)

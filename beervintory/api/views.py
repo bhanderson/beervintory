@@ -11,9 +11,11 @@ def index(request):
         for keger in floor.kegerator_set.all():
             for keg in keger.keg_set.all():
                 if keg.filled and keg.tapped:
-                    data[str(floor)] = {}
-                    data[str(floor)][str(keger)] = {}
-                    data[str(floor)][str(keger)]=str(keg)
+		    if not str(floor) in  data.keys():
+			data[str(floor)] = {}
+                    if not str(keger) in data[str(floor)].keys():
+                        data[str(floor)][str(keger)] = []
+                    data[str(floor)][str(keger)].append(str(keg))
     return JsonResponse(data)
 
 def floors(request):

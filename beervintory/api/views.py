@@ -30,7 +30,6 @@ def api1(request):
                     if not str(keger) in data[str(floor)].keys():
                         data[str(floor)][str(keger)] = []
                     data[str(floor)][str(keger)].append(keg._to_dict())
-                    print(data)
     return JsonResponse(data)
 
 def floors(request):

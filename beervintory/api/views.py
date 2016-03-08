@@ -95,6 +95,15 @@ def beers(request):
 def beer(request, id):
     try:
         beer = Beer.objects.get(id=id)
+        info = {
+                'id': id,
+                'name': beer.name,
+                'style': beer.style,
+                'brewer': beer.brewer,
+                'abv': beer.abv,
+                'ba_score': beer.ba_score,
+                'link': beer.link
+               }
     except:
         return JsonResponse({})
-    return JsonResponse({id:str(beer)})
+    return JsonResponse(info)

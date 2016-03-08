@@ -82,12 +82,12 @@ def beers(request):
     data = {'Beers':[]}
     for beer in beers:
         info = {
-                'name': beer.name,
-                'style': beer.style,
-                'brewer': beer.brewer,
-                'abv': beer.abv,
-                'ba_score': beer.ba_score,
-                'link': beer.link
+                'name': str(beer.name),
+                'style': str(beer.style),
+                'brewer': str(beer.brewer),
+                'abv': str(beer.abv),
+                'ba_score': str(beer.ba_score),
+                'link': str(beer.link)
                }
         data['Beers'].append(info)
     return JsonResponse(data)
@@ -96,13 +96,13 @@ def beer(request, id):
     try:
         beer = Beer.objects.get(id=id)
         info = {
-                'id': id,
-                'name': beer.name,
-                'style': beer.style,
-                'brewer': beer.brewer,
-                'abv': beer.abv,
-                'ba_score': beer.ba_score,
-                'link': beer.link
+                'id': str(id),
+                'name': str(beer.name),
+                'style': str(beer.style),
+                'brewer': str(beer.brewer),
+                'abv': str(beer.abv),
+                'ba_score': str(beer.ba_score),
+                'link': str(beer.link)
                }
     except:
         return JsonResponse({})

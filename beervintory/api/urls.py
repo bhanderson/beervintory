@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
         url(r'^$', views.index, name='index'),
+        url(r'1$', views.api1, name='api1'),
         url(r'floors', views.floors, name='floors'),
         url(r'floor/(?P<id>[0-9]+)/$', views.floor, name='floor'),
         url(r'kegerators', views.kegerators, name='kegerators'),

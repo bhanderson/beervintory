@@ -18,6 +18,21 @@ def index(request):
                     data[str(floor)][str(keger)].append(str(keg))
     return JsonResponse(data)
 
+def api1(request):
+    floors = Floor.objects.all()
+    data = {}
+    for floor in floors:
+        for keger in floor.kegerator_set.all():
+            for keg in keger.keg_set.all():
+                if keg.filled and keg.tapped:
+                    if not str(floor) in  data.keys():
+                        data[str(floor)] = {}
+                    if not str(keger) in data[str(floor)].keys():
+                        data[str(floor)][str(keger)] = []
+                    data[str(floor)][str(keger)].append(keg._to_dict())
+                    print(data)
+    return JsonResponse(data)
+
 def floors(request):
     floors = Floor.objects.all()
     data = {'Floors':[]}

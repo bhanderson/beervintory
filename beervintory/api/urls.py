@@ -15,4 +15,5 @@ urlpatterns = [
         url(r'beers', views.beers, name='beers'),
         url(r'beer/(?P<id>[0-9]+)/$', views.beer, name='beer'),
         url(r'kegs', views.kegs, name='kegs'),
+        url(r'keg/(?P<id>[0-9]+)/$', views.keg, name='keg'),
         ]

@@ -124,3 +124,21 @@ def kegs(request):
                 }
         data['Kegs'].append(info)
     return JsonResponse(data)
+
+def keg(request, id):
+    try:
+        keg = Keg.objects.get(id=id)
+        info = {
+                'chilled': str(keg.chilled),
+                'filled': str(keg.filled),
+                'stocked': str(keg.stocked),
+                'tapped': str(keg.tapped),
+                'chilled_date': str(keg.chilled_date),
+                'emptied_date': str(keg.emptied_date),
+                'stocked_date': str(keg.stocked_date),
+                'tapped_date': str(keg.tapped_date)
+                }
+    except:
+        return JsonResponse({})
+    return JsonResponse(info)
+

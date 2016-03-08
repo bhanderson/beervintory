@@ -37,7 +37,7 @@ def kegerators(request):
     kegers = Kegerator.objects.all()
     data = {'Kegerators':[]}
     for keger in kegers:
-        data['Kegerators'].append(str(keger))
+        data['Kegerators'].append(keger._to_dict())
     return JsonResponse(data)
 
 def kegerator(request, id):
@@ -45,8 +45,7 @@ def kegerator(request, id):
         keger = Kegerator.objects.get(id=id)
     except:
         return JsonResponse({})
-    data = {id:str(keger)}
-    return JsonResponse(data)
+    return JsonResponse({id:keger._to_dict()})
 
 def styles(request):
     styles = Style.objects.all()
@@ -81,64 +80,26 @@ def beers(request):
     beers = Beer.objects.all()
     data = {'Beers':[]}
     for beer in beers:
-        info = {
-                'name': str(beer.name),
-                'style': str(beer.style),
-                'brewer': str(beer.brewer),
-                'abv': str(beer.abv),
-                'ba_score': str(beer.ba_score),
-                'link': str(beer.link)
-                }
-        data['Beers'].append(info)
+        data['Beers'].append(beer._to_dict())
     return JsonResponse(data)
 
 def beer(request, id):
     try:
         beer = Beer.objects.get(id=id)
-        info = {
-                'id': str(id),
-                'name': str(beer.name),
-                'style': str(beer.style),
-                'brewer': str(beer.brewer),
-                'abv': str(beer.abv),
-                'ba_score': str(beer.ba_score),
-                'link': str(beer.link)
-                }
     except:
         return JsonResponse({})
-    return JsonResponse(info)
+    return JsonResponse({id: beer._to_dict()})
 
 def kegs(request):
     kegs = Keg.objects.all()
     data = {'Kegs':[]}
     for keg in kegs:
-        info = {
-                'chilled': str(keg.chilled),
-                'filled': str(keg.filled),
-                'stocked': str(keg.stocked),
-                'tapped': str(keg.tapped),
-                'chilled_date': str(keg.chilled_date),
-                'emptied_date': str(keg.emptied_date),
-                'stocked_date': str(keg.stocked_date),
-                'tapped_date': str(keg.tapped_date)
-                }
-        data['Kegs'].append(info)
+        data['Kegs'].append(keg._to_dict())
     return JsonResponse(data)
 
 def keg(request, id):
     try:
         keg = Keg.objects.get(id=id)
-        info = {
-                'chilled': str(keg.chilled),
-                'filled': str(keg.filled),
-                'stocked': str(keg.stocked),
-                'tapped': str(keg.tapped),
-                'chilled_date': str(keg.chilled_date),
-                'emptied_date': str(keg.emptied_date),
-                'stocked_date': str(keg.stocked_date),
-                'tapped_date': str(keg.tapped_date)
-                }
     except:
         return JsonResponse({})
-    return JsonResponse(info)
-
+    return JsonResponse({id: keg._to_dict()})

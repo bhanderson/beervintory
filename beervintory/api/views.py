@@ -81,7 +81,15 @@ def beers(request):
     beers = Beer.objects.all()
     data = {'Beers':[]}
     for beer in beers:
-        data['Beers'].append(str(beer))
+        info = {
+                'name': beer.name,
+                'style': beer.style,
+                'brewer': beer.brewer,
+                'abv': beer.abv,
+                'ba_score': beer.ba_score,
+                'link': beer.link
+               }
+        data['Beers'].append(info)
     return JsonResponse(data)
 
 def beer(request, id):

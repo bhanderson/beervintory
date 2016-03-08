@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from inventory.models import Floor, Kegerator, Style, Brewer, Beer
+from inventory.models import Floor, Kegerator, Style, Brewer, Beer, Keg
 
 # Create your views here.
 
@@ -88,7 +88,7 @@ def beers(request):
                 'abv': str(beer.abv),
                 'ba_score': str(beer.ba_score),
                 'link': str(beer.link)
-               }
+                }
         data['Beers'].append(info)
     return JsonResponse(data)
 
@@ -103,7 +103,24 @@ def beer(request, id):
                 'abv': str(beer.abv),
                 'ba_score': str(beer.ba_score),
                 'link': str(beer.link)
-               }
+                }
     except:
         return JsonResponse({})
     return JsonResponse(info)
+
+def kegs(request):
+    kegs = Keg.objects.all()
+    data = {'Kegs':[]}
+    for keg in kegs:
+        info = {
+                'chilled': str(keg.chilled),
+                'filled': str(keg.filled),
+                'stocked': str(keg.stocked),
+                'tapped': str(keg.tapped),
+                'chilled_date': str(keg.chilled_date),
+                'emptied_date': str(keg.emptied_date),
+                'stocked_date': str(keg.stocked_date),
+                'tapped_date': str(keg.tapped_date)
+                }
+        data['Kegs'].append(info)
+    return JsonResponse(data)

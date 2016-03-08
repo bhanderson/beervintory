@@ -22,6 +22,14 @@ class Kegerator(models.Model):
     clean_date = models.DateField(default=timezone.now)
     floor = models.ForeignKey(Floor, blank=True, null=True)
     name = models.CharField(max_length=50, default="Kegerator", unique=True)
+    def _to_dict(self):
+        info = {
+                'co2_date': str(self.co2_date),
+                'clean_date': str(self.clean_date),
+                'floor': str(self.floor),
+                'name': str(self.name)
+                }
+        return info
     def __str__(self):
         if self.name:
             return str(self.name)
@@ -49,6 +57,16 @@ class Beer(models.Model):
     brewer = models.ForeignKey(Brewer)
     name = models.CharField(max_length=50, default="Name", unique=True)
     style = models.ForeignKey(Style)
+    def _to_dict(self):
+        info = {
+                'name': str(self.name),
+                'style': str(self.style),
+                'brewer': str(self.brewer),
+                'abv': str(self.abv),
+                'ba_score': str(self.ba_score),
+                'link': str(self.link)
+                }
+        return info
     def __str__(self):
         if self.name or self.style or self.brewer:
             return "{0} {1} | {2}".format(self.name, self.style, self.brewer)
@@ -65,6 +83,20 @@ class Keg(models.Model):
     emptied_date = models.DateField(default=timezone.now)
     stocked_date = models.DateField(default=timezone.now)
     tapped_date = models.DateField(default=timezone.now)
+    def _to_dict(self):
+        info = {
+                'beer': self.beer._to_dict(),
+                'kegerator': self.kegerator._to_dict(),
+                'chilled': str(self.chilled),
+                'filled': str(self.filled),
+                'stocked': str(self.stocked),
+                'tapped': str(self.tapped),
+                'chilled_date': str(self.chilled_date),
+                'emptied_date': str(self.emptied_date),
+                'stocked_date': str(self.stocked_date),
+                'tapped_date': str(self.tapped_date)
+                }
+        return info
     def __str__(self):
         cold = "Warm"
         full = "Empty"

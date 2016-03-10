@@ -125,3 +125,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = "/var/www/beervintory/beervintory/static/"
+APPEND_SLASH = True

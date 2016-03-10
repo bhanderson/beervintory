@@ -34,7 +34,7 @@ def add_rating(beer, rating, ip):
     return HttpResponseRedirect('rate')
 
 def index(request):
-    ip = request.META.get('REMOTE_ADDR')
+    ip = request.META.get('HTTP_X_REAL_IP')
     if request.method == "POST":
         if ('beer' in request.POST and 'rating' in request.POST):
             beer = None

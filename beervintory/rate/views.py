@@ -11,14 +11,14 @@ def new_rating(beer, rating, ip):
     new_rate.rating = rating
     new_rate.raters = json.dumps({ip:rating})
     new_rate.save()
-    return HttpResponseRedirect('rate')
+    return HttpResponseRedirect('')
 
 def add_rating(beer, rating, ip):
     try:
         rate = Rate.objects.get(beer=beer)
     except ValueError:
         return HttpResponse("could not find rating")
-        return HttpResponseRedirect('rate')
+        return HttpResponseRedirect('')
     jd = json.decoder.JSONDecoder()
     d = jd.decode(rate.raters)
     if ip in d.keys():
@@ -31,10 +31,12 @@ def add_rating(beer, rating, ip):
     rate.rating = avg
     rate.raters = json.dumps(d)
     rate.save()
-    return HttpResponseRedirect('rate')
+    return HttpResponseRedirect('')
 
 def index(request):
     ip = request.META.get('HTTP_X_REAL_IP')
+    if not ip:
+        ip = request.META.get('REMOTE_ADDR')
     if request.method == "POST":
         if ('beer' in request.POST and 'rating' in request.POST):
             beer = None

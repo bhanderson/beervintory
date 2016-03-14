@@ -74,7 +74,7 @@ class Beer(models.Model):
 
 class Keg(models.Model):
     beer = models.ForeignKey(Beer)
-    kegerator = models.ForeignKey(Kegerator)
+    kegerator = models.ForeignKey(Kegerator, blank=True)
     chilled = models.BooleanField(default=False)
     filled = models.BooleanField(default=False)
     stocked = models.BooleanField(default=False)

@@ -23,7 +23,7 @@ def index(request):
             try:
                 req = models.Request.objects.get(id=request.POST['request'])
             except ValueError:
-                return HttpResponseRedirect('request')
+                return HttpResponseRedirect('')
             # if we have the request start the addition
             if req:
                 jd = json.decoder.JSONDecoder()
@@ -38,7 +38,7 @@ def index(request):
                 except IntegrityError:
                     return HttpResponse("Error")
         # if we get a different post
-        return HttpResponseRedirect('request')
+        return HttpResponseRedirect('')
     # if we are displaying the website create the forms and send the requests
     form = RequestForm()
     newform = NewRequestForm()

@@ -6,7 +6,7 @@ import json
 
 # Create your views here.
 def index(request):
-    ip = request.META.get('REMOTE_ADDR')
+    ip = request.META.get('HTTP_X_REAL_IP')
     if request.method == "POST":
         if 'new_request' in request.POST:
             req = models.Request()
@@ -29,7 +29,7 @@ def index(request):
                 jd = json.decoder.JSONDecoder()
                 l = jd.decode(req.requesters)
                 if ip in l:
-                    return HttpResponse("Sorry your IP already voted for this request")
+                    return HttpResponse("Sorry your IP ({0}) already voted for this request".format(ip))
                 req.number+=1
                 l.append(ip)
                 req.requesters = json.dumps(l)
@@ -44,4 +44,4 @@ def index(request):
     newform = NewRequestForm()
     return render(request, 'request/index.html',
             {'form': form, 'newform': newform,
-                'Requests':models.Request.objects.all()})
+                'Requests':models.Request.objects.all().order_by('-number')})

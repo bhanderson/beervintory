@@ -85,8 +85,8 @@ class Keg(models.Model):
     tapped_date = models.DateField(default=timezone.now)
     def _to_dict(self):
         info = {
-                'beer': self.beer._to_dict(),
-                'kegerator': self.kegerator._to_dict(),
+                'beer': self.beer._to_dict() if self.beer else None,
+                'kegerator': self.kegerator._to_dict() if self.kegerator else None,
                 'chilled': str(self.chilled),
                 'filled': str(self.filled),
                 'stocked': str(self.stocked),

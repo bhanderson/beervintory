@@ -39,6 +39,7 @@ def api1(request):
                     data[str(floor)][str(keger)].append(keg._to_dict())
     return JsonResponse(data)
 
+@csrf_exempt
 def request1(request):
     if request.method != "POST":
         return HttpResponse('Error this method only allows POST')

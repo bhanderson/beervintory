@@ -1,6 +1,13 @@
-from django.shortcuts import render
+from django.db import IntegrityError
+from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from inventory.models import Floor, Kegerator, Style, Brewer, Beer, Keg
+from request.models import Request
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+# manually create api keys here
+APIKEYS = []
 
 # Create your views here.
 
@@ -31,6 +38,36 @@ def api1(request):
                         data[str(floor)][str(keger)] = []
                     data[str(floor)][str(keger)].append(keg._to_dict())
     return JsonResponse(data)
+
+def request1(request):
+    if request.method != "POST":
+        return HttpResponse('Error this method only allows POST')
+    if 'key' not in request.POST:
+        return HttpResponse('Error you must specify an api key')
+
+    key = request.POST.get('key')
+    if key not in APIKEYS:
+        return HttpResponse('API Key Error')
+
+    if 'new_request' not in request.POST:
+        return HttpResponse('Error you must specify a request')
+
+    requestname = request.POST.get('new_request')
+    if requestname:
+        ip = request.META.get('HTTP_X_REAL_IP')
+        if not ip:
+            ip = request.META.get('REMOTE_ADDR')
+        req = Request()
+        req.beer = requestname
+        req.number = 1
+        req.requesters = json.dumps([ip])
+        try:
+            req.save()
+        except IntegrityError:
+            return HttpResponse("Sorry that request already exists")
+        return HttpResponse('Success')
+    return HttpResponse('Error')
+
 
 def floors(request):
     floors = Floor.objects.all()

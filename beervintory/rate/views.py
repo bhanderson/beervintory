@@ -59,4 +59,4 @@ def index(request):
     rate = RateForm()
     return render(request, 'rate/index.html',
             {'beer': beer, 'rate': rate,
-                'Ratings': Rate.objects.all()})
+                'Ratings': Rate.objects.all().order_by('-rating')})

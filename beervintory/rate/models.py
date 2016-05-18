@@ -10,6 +10,6 @@ class Rate(models.Model):
     beer = models.OneToOneField(Beer, editable=False)
     raters = models.TextField(editable=False) # json dict of ip : rating
     def __str__(self):
-        return "{0}: {1}".format(str(self.beer), str(self.rating))
+        return "{0}: {1}".format(str(self.rating), str(self.beer))
         return self
         return "error"

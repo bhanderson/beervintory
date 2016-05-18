@@ -7,6 +7,8 @@ import json
 # Create your views here.
 def index(request):
     ip = request.META.get('HTTP_X_REAL_IP')
+    if not ip:
+        ip = request.META.get('REMOTE_ADDR')
     if request.method == "POST":
         if 'new_request' in request.POST:
             req = models.Request()
@@ -28,7 +30,7 @@ def index(request):
             if req:
                 jd = json.decoder.JSONDecoder()
                 l = jd.decode(req.requesters)
-                if ip in l:
+                if ip and ip in l:
                     return HttpResponse("Sorry your IP ({0}) already voted for this request".format(ip))
                 req.number+=1
                 l.append(ip)

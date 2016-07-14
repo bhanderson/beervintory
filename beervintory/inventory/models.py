@@ -71,6 +71,8 @@ class Beer(models.Model):
         if self.name or self.style or self.brewer:
             return "{0} {1} | {2}".format(self.name, self.style, self.brewer)
         return self
+    class Meta:
+        ordering = ["name"]
 
 class Keg(models.Model):
     beer = models.ForeignKey(Beer)
@@ -110,3 +112,5 @@ class Keg(models.Model):
         else:
             return 'None | {0}, {1}'.format(full,cold)
         return self
+    class Meta:
+        ordering = ["beer"]

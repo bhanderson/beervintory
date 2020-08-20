@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from .forms import RateForm, BeerForm
-from models import Rate, Beer
+from .models import Rate, Beer
 import json
 
 # Create your views here.

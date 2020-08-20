@@ -6,7 +6,7 @@ This project is just a simple website originally written in flask (1.0) now usin
 
 #How to run
 ```
-pip install -r requirements.txt
+pipenv sync
 cd beervintory
 python manage.py makemigrations {inventory,rate,request,website,api}
 python manage.py migrate

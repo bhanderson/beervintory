@@ -7,7 +7,7 @@ import json
 # Create your models here.
 class Rate(models.Model):
     rating = models.SmallIntegerField(editable=False) # this will be modded by 100
-    beer = models.OneToOneField(Beer, editable=False)
+    beer = models.OneToOneField(Beer, editable=False, on_delete=models.CASCADE)
     raters = models.TextField(editable=False) # json dict of ip : rating
     def __str__(self):
         jd = json.decoder.JSONDecoder()

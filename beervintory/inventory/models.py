@@ -20,7 +20,7 @@ class Floor(models.Model):
 class Kegerator(models.Model):
     co2_date = models.DateField(default=timezone.now)
     clean_date = models.DateField(default=timezone.now)
-    floor = models.ForeignKey(Floor, blank=True, null=True)
+    floor = models.ForeignKey(Floor, blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default="Kegerator", unique=True)
     def _to_dict(self):
         info = {
@@ -54,9 +54,9 @@ class Beer(models.Model):
     abv = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
     ba_score = models.SmallIntegerField()
     link = models.CharField(max_length=100, default="Link to Beer")
-    brewer = models.ForeignKey(Brewer)
+    brewer = models.ForeignKey(Brewer, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default="Name", unique=True)
-    style = models.ForeignKey(Style)
+    style = models.ForeignKey(Style, on_delete=models.CASCADE)
     def _to_dict(self):
         info = {
                 'name': str(self.name),
@@ -75,8 +75,8 @@ class Beer(models.Model):
         ordering = ["name"]
 
 class Keg(models.Model):
-    beer = models.ForeignKey(Beer)
-    kegerator = models.ForeignKey(Kegerator, blank=True, null=True)
+    beer = models.ForeignKey(Beer, on_delete=models.CASCADE)
+    kegerator = models.ForeignKey(Kegerator, blank=True, null=True, on_delete=models.CASCADE)
     chilled = models.BooleanField(default=False)
     filled = models.BooleanField(default=False)
     stocked = models.BooleanField(default=False)

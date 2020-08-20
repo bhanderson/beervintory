@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-appdirs = "==1.4.0"
-Django = "==1.9.2"
-django-cors-headers = "==2.0.0"
-pyparsing = "==2.1.10"
-six = "==1.10.0"
+appdirs = ">=1.4.0"
+Django = ">=1.9.2"
+django-cors-headers = ">=2.0.0"
+pyparsing = ">=2.1.10"
+six = ">=1.10.0"
 
 [dev-packages]
 
